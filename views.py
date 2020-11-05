@@ -25,8 +25,8 @@ def whisky():
 
     #The connection the the server.
     con = pymysql.connect(host='localhost',
-        user='root',
-        password='3306',
+        user='whiskymaster',
+        password='whisky',
         db='whiskymaster',
         charset='utf8mb4',
         cursorclass=pymysql.cursors.DictCursor)
