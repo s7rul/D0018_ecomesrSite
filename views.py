@@ -8,11 +8,13 @@ import pymysql.cursors
 @app.route('/')
 @app.route('/home')
 def home():
+
+    #Adds time and date.
     now = datetime.now()
     formatted_now = now.strftime("%A, %d %B, %Y at %X")
 
 
-    
+    #Returns the HTML page with the set info.
     return render_template(
         "index.html",
         title = "WHISKYMASTER",
@@ -37,7 +39,9 @@ def whisky():
 
         with con.cursor() as cur:
 
+            whiskyNumber = []
             whiskyprod = []
+
 
             cur.execute('SELECT * FROM whisky')
 
@@ -45,7 +49,10 @@ def whisky():
 
             for row in rows:
                 #print(row['WhiskyName'])
+                #print(row['WhiskyID'])
+                whiskyNumber.append(row['WhiskyID'])
                 whiskyprod.append(row['WhiskyName'])
+
 
     finally:
 
@@ -54,4 +61,5 @@ def whisky():
     return render_template(
     "whisky.html",
     title = "Whisky Master",
-    message = whiskyprod)
+    message = whiskyprod,
+    whiskyID = whiskyNumber)

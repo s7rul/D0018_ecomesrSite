@@ -6,9 +6,9 @@
     <p>Here we sell Whisky to companies</p>
 
 
-
     {% for item in message %}
-        <p>{{ item }}</p>
+        <!--Jinja Loop starts at 1 and not zero-->
+        <p>{{whiskyID[loop.index-1]}} {{ item }}</p>
     {% endfor %}
 
 
