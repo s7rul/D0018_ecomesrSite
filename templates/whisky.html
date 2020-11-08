@@ -15,7 +15,9 @@
 
     {% for item in message %}
         <!--Jinja Loop starts at 1 and not zero-->
-        <p>{{whiskyID[loop.index-1]}} {{ item }}</p>
+		<p>
+		<a href="../whisky/{{whiskyID[loop.index-1]}}">{{ item }}</a>
+		</p>
     {% endfor %}
 
 	</div>
