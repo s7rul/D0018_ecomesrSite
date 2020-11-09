@@ -87,9 +87,9 @@ def whiskypage(whiskyID):
 
             cur.execute("SELECT * FROM whisky WHERE WhiskyID=%s;", (str(whiskyID),))
 
-            rows = cur.fetchone()
+            row = cur.fetchone()
 
-            name = rows['WhiskyName']
+            #name = rows['WhiskyName']
 
 
 
@@ -100,4 +100,4 @@ def whiskypage(whiskyID):
     return render_template(
     "whiskypage.html",
     title = "Whisky Master",
-    message = name)
+    message = row)

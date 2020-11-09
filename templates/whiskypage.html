@@ -4,13 +4,54 @@
 	<title>Whisky master</title>
 	<style>
 		div {text-align: center;}
+		table.center {
+    		margin-left:auto;
+    		margin-right:auto;
+  		}
+		table, th, td {
+  			border: 1px solid black;
+  			border-collapse: collapse;
+		}
+		th, td {
+			padding: 10px;
+		}
 	</style>
 </head>
 <body>
 	<div>
 
-	<h2>{{message}}</h2>
+	<h2>{{message['WhiskyName']}}</h2>
 	<p> Test test test </p>
+
+	</div>
+	<div>
+
+	<table class="center">
+		<tr>
+			<th> Price </th>
+			<th> {{message['Price']}} kr</th>
+		</tr>
+		<tr>
+			<th> Nation </th>
+			<th> {{message['Nation']}} </th>
+		</tr>
+		<tr>
+			<th> distilery </th>
+			<th> {{message['Distillery']}} </th>
+		</tr>
+		<tr>
+			<th> region </th>
+			<th> {{message['Region']}} </th>
+		</tr>
+		<tr>
+			<th> alcohol </th>
+			<th> {{message['Alohol']}} </th>
+		</tr>
+		<tr>
+			<th> In stock </th>
+			<th> {{message['StorageLeft']}} st</th>
+		</tr>
+	</table>
 
 	</div>
 </body>
