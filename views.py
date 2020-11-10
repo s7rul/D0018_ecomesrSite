@@ -120,11 +120,44 @@ def whiskypage(whiskyID):
 def login():
     
     form = LoginForm(request.form)
+    form.userName.data
 
 
     if (request.method == 'POST'):
-        print(form.passW.data)
-        return redirect('/whisky/1')
+
+
+#        print(form.passW.data)
+#        return redirect('/whisky/1')
+
+        con = pymysql.connect(host='localhost',
+        user='whiskymaster',
+        password='whisky',
+        db='whiskymaster',
+        charset='utf8mb4',
+        cursorclass=pymysql.cursors.DictCursor)
+
+        # Try to connect to the server and find all values for
+        # whisky tabel.
+        try:
+            with con.cursor() as cur:
+
+                cur.execute("SELECT * FROM whisky WHERE WhiskyID=%s;", (str(form.userName.data),))
+
+                row = cur.fetchone()
+
+                if row['PassW'] == form.passW.data:
+                    return redirect('/succsess')
+
+                else:
+                    print("You done Goffed")
+
+
+
+
+
+
+        finally:
+            con.close()
         
     return render_template(
     "login.html",
