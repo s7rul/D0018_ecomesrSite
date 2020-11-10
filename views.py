@@ -46,7 +46,7 @@ def whisky():
             whiskyprod = []
 
 
-            cur.execute('SELECT * FROM whisky')
+            cur.execute('SELECT * FROM WHISKY')
 
             rows = cur.fetchall()
 
@@ -89,7 +89,7 @@ def whiskypage(whiskyID):
 
             
 
-            cur.execute("SELECT * FROM whisky WHERE WhiskyID=%s;", (str(whiskyID),))
+            cur.execute("SELECT * FROM WHISKY WHERE WhiskyID=%s;", (str(whiskyID),))
 
 
             row = cur.fetchone()
@@ -129,3 +129,8 @@ def login():
     return render_template(
     "login.html",
     form=form)
+
+
+@app.route('/succsess/<data>')
+def succsess(data):
+    return render_template("succsess.html", message=data)
