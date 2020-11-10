@@ -1,9 +1,11 @@
 
 from datetime import datetime
-from flask import render_template
+from flask import render_template, request, redirect
 from HelloFlask import app
 import pymysql
 import pymysql.cursors
+from HelloFlask.forms.LoginForm import LoginForm
+
 
 @app.route('/')
 @app.route('/home')
@@ -12,6 +14,7 @@ def home():
     #Adds time and date.
     now = datetime.now()
     formatted_now = now.strftime("%A, %d %B, %Y at %X")
+
 
 
     #Returns the HTML page with the set info.
@@ -84,10 +87,21 @@ def whiskypage(whiskyID):
 
             name = ""
 
+            
 
             cur.execute("SELECT * FROM whisky WHERE WhiskyID=%s;", (str(whiskyID),))
 
+
             row = cur.fetchone()
+
+
+#            cur.execute("UPDATE whiskymaster.Whisky SET StorageLeft=120 WHERE WhiskyID='1'")
+
+            
+#            con.commit()
+            
+
+
 
             #name = rows['WhiskyName']
 
@@ -101,3 +115,17 @@ def whiskypage(whiskyID):
     "whiskypage.html",
     title = "Whisky Master",
     message = row)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    
+    form = LoginForm(request.form)
+
+
+    if (request.method == 'POST'):
+        print(form.passW.data)
+        return redirect('/whisky/1')
+        
+    return render_template(
+    "login.html",
+    form=form)
