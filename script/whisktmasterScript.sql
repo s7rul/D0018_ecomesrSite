@@ -7,7 +7,7 @@ CREATE USER 'whiskymaster'@'localhost' IDENTIFIED BY 'whisky';
 
 GRANT ALL PRIVILEGES ON whiskymaster.* TO 'whiskymaster'@'localhost';
 
-CREATE TABLE whiskymaster.whisky
+CREATE TABLE whiskymaster.WHISKY
 (
 	WhiskyID	VARCHAR(15)		NOT NULL,
     WhiskyName	VARCHAR(100)	NOT NULL,
@@ -98,7 +98,7 @@ CREATE TABLE whiskymaster.grading
     UserID			VARCHAR(15)		NOT NUll,
     
     PRIMARY KEY(GradingID),
-    FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.whisky(WhiskyID),
+    FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.WHISKY(WhiskyID),
     FOREIGN KEY (UserID) REFERENCES whiskymaster.customers(CustomerID)
     
     
@@ -112,8 +112,8 @@ CREATE TABLE whiskymaster.reservedProduct
     ProductNumber	VARCHAR(15)		NOT NUll,
     
     PRIMARY KEY(ID),
-    FOREIGN KEY (ReservedID) REFERENCES whiskymaster.Reserved(ReservedID),
-    FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.whisky(WhiskyID)
+    FOREIGN KEY (ReservedID) REFERENCES whiskymaster.reserved(ReservedID),
+    FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.WHISKY(WhiskyID)
     
     
 	);
@@ -127,7 +127,7 @@ CREATE TABLE whiskymaster.comments
     
     PRIMARY KEY(ID),
     FOREIGN KEY (UserID) REFERENCES whiskymaster.customers(CustomerID),
-    FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.whisky(WhiskyID)
+    FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.WHISKY(WhiskyID)
     
 	);
 
@@ -162,7 +162,7 @@ CREATE TABLE whiskymaster.BasketProduct
     
     PRIMARY KEY(ID),
     FOREIGN KEY (BasketID) REFERENCES whiskymaster.Basket(ID),
-    FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.whisky(WhiskyID)
+    FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.WHISKY(WhiskyID)
     
 	);
 
