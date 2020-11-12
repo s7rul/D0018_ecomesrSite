@@ -1,5 +1,5 @@
 DROP USER IF EXISTS 'whiskymaster'@'localhost';
-DROP DATABASE whiskymaster;
+DROP DATABASE IF EXISTS whiskymaster;
 
 CREATE DATABASE whiskymaster;
 
