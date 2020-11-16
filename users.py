@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, make_response
 from HelloFlask import app
 import pymysql
 import pymysql.cursors
@@ -21,7 +21,7 @@ def login():
         try:
             with con.cursor() as cur:
 
-                cur.execute("SELECT * FROM customers WHERE UserName=%s;", (str(form.userName.data),))
+                cur.execute("SELECT * FROM customers WHERE UserName=%s AND PassW=%s;", (str(form.userName.data), str(form.passW.data)))
 
                 row = cur.fetchone()
 
@@ -29,7 +29,8 @@ def login():
                     return "You done Goffed"
                     
                 else:
-                    return redirect('/user/'+ row['CustomerID'])
+                    return userPageLogin(row['CustomerID'])
+                    #return redirect('/user/'+ row['CustomerID'])
 
 
 
@@ -40,8 +41,46 @@ def login():
     "login.html",
     form=form)
 
+
+
+
+def userPageLogin(ID):
+    #The connection the the server.
+    con = getConnection()
+
+    # Try to connect to the server and find all values for
+    # whisky tabel.
+    try:
+
+        with con.cursor() as cur:
+
+            cur.execute("SELECT * FROM customers WHERE CustomerID=%s;", (ID,))
+
+            row = cur.fetchone()
+
+    finally:
+
+        con.close()
+
+    ret = make_response(render_template(
+    "userPage.html",
+    title = "Whisky Master",
+    customer = row))
+    #set the cookie
+    ret.set_cookie('userID', ID)
+    return ret
+
+@app.route('/user/')
+def userPageCookie():
+    ID = request.cookies.get('userID')
+
+    if ID == None:
+        return redirect('/login')
+    else:
+        return userPageLogin(ID)
+
 @app.route('/user/<userID>')
-def userPage(userID):
+def userPageURL(userID):
 
 
     #The connection the the server.

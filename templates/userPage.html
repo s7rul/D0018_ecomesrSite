@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Whisky master</title>
+	<style>
+		div {text-align: center;}
+		table.center {
+    		margin-left:auto;
+    		margin-right:auto;
+  		}
+		table, th, td {
+  			border: 1px solid black;
+  			border-collapse: collapse;
+		}
+		th, td {
+			padding: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div>
+
+	<h2>{{customer['UserName']}}</h2>
+
+	</div>
+	<div>
+
+	<table class="center">
+		<tr>
+			<th colspan="2"> My info </th>
+		</tr>
+		<tr>
+			<th> CustomerID </th>
+			<th> {{customer['CustomerID']}} </th>
+		</tr>
+		<tr>
+			<th> Password </th>
+			<th> {{customer['PassW']}} </th>
+		</tr>
+		{% if customer['CorpName'] != None %}
+		<tr>
+			<th> Corporation </th>
+			<th> {{customer['CorpName']}} </th>
+		</tr>
+		{% endif %}
+		{% if customer['Mail'] != None %}
+		<tr>
+			<th> Mail </th>
+			<th> {{customer['Mail']}} </th>
+		</tr>
+		{% endif %}
+		{% if customer['PNumber'] != None %}
+		<tr>
+			<th> Phone number </th>
+			<th> {{customer['PNumber']}} </th>
+		</tr>
+		{% endif %}
+		{% if customer['City'] != None %}
+		<tr>
+			<th> City </th>
+			<th> {{customer['City']}} </th>
+		</tr>
+		{% endif %}
+		{% if customer['Address'] != None %}
+		<tr>
+			<th> Address </th>
+			<th> {{customer['Address']}} </th>
+		</tr>
+		{% endif %}
+		{% if customer['ZipCode'] != None %}
+		<tr>
+			<th> ZipCode </th>
+			<th> {{customer['ZipCode']}} </th>
+		</tr>
+		{% endif %}
+	</table>
+
+
+	</div>
+
+</body>
+</html>
