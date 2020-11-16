@@ -39,15 +39,17 @@
 			<th> {{message['Nation']}} </th>
 		</tr>
 		<tr>
-			<th> distilery </th>
+			<th> Distilery </th>
 			<th> {{message['Distillery']}} </th>
 		</tr>
+		{% if message['Region'] != None %}
 		<tr>
-			<th> region </th>
+			<th> Region </th>
 			<th> {{message['Region']}} </th>
 		</tr>
+		{% endif %}
 		<tr>
-			<th> alcohol </th>
+			<th> Alcohol </th>
 			<th> {{message['Alohol']}} </th>
 		</tr>
 		<tr>

@@ -26,8 +26,8 @@ CREATE TABLE whiskymaster.WHISKY
     );
     
 INSERT INTO whiskymaster.WHISKY(WhiskyID, WhiskyName, Price, StorageLeft,
-Nation, Distillery, Alohol)
-VALUES('1','Nikka Tailord', '1100', 5, 'Japan', 'Nikka', '43.0%');
+Nation, Distillery, Alohol, Region)
+VALUES('1','Nikka Tailord', '1100', 5, 'Japan', 'Nikka', '43.0%', 'Test');
 
 INSERT INTO whiskymaster.WHISKY(WhiskyID, WhiskyName, Price, StorageLeft,
 Nation, Distillery, Alohol)
