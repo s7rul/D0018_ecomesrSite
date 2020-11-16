@@ -39,7 +39,7 @@ def whisky():
             whiskyprod = []
 
 
-            cur.execute('SELECT * FROM WHISKY')
+            cur.execute('SELECT * FROM whisky')
 
             rows = cur.fetchall()
 
@@ -71,7 +71,7 @@ def whiskypage(whiskyID):
 
         with con.cursor() as cur:
 
-            cur.execute("SELECT * FROM WHISKY WHERE WhiskyID=%s;", (str(whiskyID),))
+            cur.execute("SELECT * FROM whisky WHERE WhiskyID=%s;", (str(whiskyID),))
 
 
             row = cur.fetchone()

@@ -7,7 +7,7 @@ CREATE USER 'whiskymaster'@'localhost' IDENTIFIED BY 'whisky';
 
 GRANT ALL PRIVILEGES ON whiskymaster.* TO 'whiskymaster'@'localhost';
 
-CREATE TABLE whiskymaster.WHISKY
+CREATE TABLE whiskymaster.whisky
 (
 	WhiskyID	VARCHAR(15)		NOT NULL,
     WhiskyName	VARCHAR(100)	NOT NULL,
@@ -25,27 +25,27 @@ CREATE TABLE whiskymaster.WHISKY
     PRIMARY KEY(WhiskyID)
     );
     
-INSERT INTO whiskymaster.WHISKY(WhiskyID, WhiskyName, Price, StorageLeft,
+INSERT INTO whiskymaster.whisky(WhiskyID, WhiskyName, Price, StorageLeft,
 Nation, Distillery, Alohol, Region)
 VALUES('1','Nikka Tailord', '1100', 5, 'Japan', 'Nikka', '43.0%', 'Test');
 
-INSERT INTO whiskymaster.WHISKY(WhiskyID, WhiskyName, Price, StorageLeft,
+INSERT INTO whiskymaster.whisky(WhiskyID, WhiskyName, Price, StorageLeft,
 Nation, Distillery, Alohol)
 VALUES('2','Caol Ila The Maltman 6 Years', '900', 10, 'Scotland', 'Caol Ila', '51.6%');
 
-INSERT INTO whiskymaster.WHISKY(WhiskyID, WhiskyName, Price, StorageLeft,
+INSERT INTO whiskymaster.whisky(WhiskyID, WhiskyName, Price, StorageLeft,
 Nation, Distillery, Alohol)
 VALUES('3','Penderyn Oloroso Sherry Finish', '800', 5, 'Scotland', 'Penderyn', '59.2%');
 
-INSERT INTO whiskymaster.WHISKY(WhiskyID, WhiskyName, Price, StorageLeft,
+INSERT INTO whiskymaster.whisky(WhiskyID, WhiskyName, Price, StorageLeft,
 Nation, Distillery, Alohol)
 VALUES('4','Hibiki Japanese Harmony', '750', 5, 'Japan', 'Suntory Whisky', '43%');
 
-INSERT INTO whiskymaster.WHISKY(WhiskyID, WhiskyName, Price, StorageLeft,
+INSERT INTO whiskymaster.whisky(WhiskyID, WhiskyName, Price, StorageLeft,
 Nation, Distillery, Alohol)
 VALUES('5','Bunnahabhain 18', '1300', 3, 'Scotland', 'Bunnahabhain', '46.3%');
 
-INSERT INTO whiskymaster.WHISKY(WhiskyID, WhiskyName, Price, StorageLeft,
+INSERT INTO whiskymaster.whisky(WhiskyID, WhiskyName, Price, StorageLeft,
 Nation, Distillery, Alohol)
 VALUES('6','Glenfiddich 21 Reserva Rum Cask Finish', '1400', 2, 'Scotland', 'Glenfiddich', '43.2%');
 
@@ -98,7 +98,7 @@ CREATE TABLE whiskymaster.grading
     UserID			VARCHAR(15)		NOT NUll,
     
     PRIMARY KEY(GradingID),
-    FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.WHISKY(WhiskyID),
+    FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.whisky(WhiskyID),
     FOREIGN KEY (UserID) REFERENCES whiskymaster.customers(CustomerID)
     
     
@@ -113,7 +113,7 @@ CREATE TABLE whiskymaster.reservedProduct
     
     PRIMARY KEY(ID),
     FOREIGN KEY (ReservedID) REFERENCES whiskymaster.reserved(ReservedID),
-    FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.WHISKY(WhiskyID)
+    FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.whisky(WhiskyID)
     
     
 	);
@@ -127,7 +127,7 @@ CREATE TABLE whiskymaster.comments
     
     PRIMARY KEY(ID),
     FOREIGN KEY (UserID) REFERENCES whiskymaster.customers(CustomerID),
-    FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.WHISKY(WhiskyID)
+    FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.whisky(WhiskyID)
     
 	);
 
@@ -162,9 +162,9 @@ CREATE TABLE whiskymaster.BasketProduct
     
     PRIMARY KEY(ID),
     FOREIGN KEY (BasketID) REFERENCES whiskymaster.Basket(ID),
-    FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.WHISKY(WhiskyID)
+    FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.whisky(WhiskyID)
     
 	);
 
 
-#UPDATE whiskymaster.Whisky SET StorageLeft=120 WHERE WhiskyID='1';
+#UPDATE whiskymaster.whisky SET StorageLeft=120 WHERE WhiskyID='1';
