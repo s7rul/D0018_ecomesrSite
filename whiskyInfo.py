@@ -44,8 +44,6 @@ def whisky():
             rows = cur.fetchall()
 
             for row in rows:
-                #print(row['WhiskyName'])
-                #print(row['WhiskyID'])
                 whiskyNumber.append(row['WhiskyID'])
                 whiskyprod.append(row['WhiskyName'])
 
