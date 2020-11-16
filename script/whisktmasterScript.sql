@@ -68,6 +68,8 @@ CREATE TABLE whiskymaster.customers
     
 INSERT INTO whiskymaster.customers(CustomerID, UserName, PassW)
 VALUES('0', 'cust0', 'root');
+INSERT INTO whiskymaster.customers(CustomerID, CorpName, UserName, PassW, Mail, PNumber, City, Address, ZipCode)
+VALUES('1', 'Margo and sons', 'Margo', 'pas', 'margo@margoasons.com', '1231234', 'Margonia', 'mstraze 23','23456');
     
     
 CREATE TABLE whiskymaster.reserved

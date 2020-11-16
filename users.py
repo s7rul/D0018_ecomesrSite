@@ -29,7 +29,7 @@ def login():
                     return "You done Goffed"
                     
                 else:
-                    return redirect('/succsess/'+ row['CustomerID'])
+                    return redirect('/user/'+ row['CustomerID'])
 
 
 
@@ -39,3 +39,31 @@ def login():
     return render_template(
     "login.html",
     form=form)
+
+@app.route('/user/<userID>')
+def userPage(userID):
+
+
+    #The connection the the server.
+    con = getConnection()
+
+    # Try to connect to the server and find all values for
+    # whisky tabel.
+    try:
+
+        with con.cursor() as cur:
+
+            cur.execute("SELECT * FROM customers WHERE CustomerID=%s;", (userID,))
+
+
+            row = cur.fetchone()
+
+
+    finally:
+
+        con.close()
+
+    return render_template(
+    "userPage.html",
+    title = "Whisky Master",
+    customer = row)
