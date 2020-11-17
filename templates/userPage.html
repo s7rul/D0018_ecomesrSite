@@ -1,23 +1,7 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-	<title>Whisky master</title>
-	<style>
-		div {text-align: center;}
-		table.center {
-    		margin-left:auto;
-    		margin-right:auto;
-  		}
-		table, th, td {
-  			border: 1px solid black;
-  			border-collapse: collapse;
-		}
-		th, td {
-			padding: 10px;
-		}
-	</style>
-</head>
-<body>
+﻿{% extends 'layOut.html' %}
+
+	{% block body %}
+
 	<div>
 
 	<h2>{{customer['UserName']}}</h2>
@@ -78,5 +62,4 @@
 
 	</div>
 
-</body>
-</html>
+	{% endblock %}

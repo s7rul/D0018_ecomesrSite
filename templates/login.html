@@ -1,15 +1,25 @@
-﻿<form action="" method="POST">
+﻿{% extends 'layOut.html' %}
 
-    <div class="container">
-        <div>
-            {{ form.userName.label }} {{ form.userName}}
-        </div>
-        <div>
-            {{ form.passW.label }} {{ form.passW}}
-        </div>
-        {{ form.submit }}
-        <label>
-        </label>
-    </div>
+	{% block body %}
 
-</form>
+	<div>
+
+		<form action="" method="POST">
+
+			<div class="container">
+				<div>
+					{{ form.userName.label }} {{ form.userName}}
+				</div>
+				<div>
+					{{ form.passW.label }} {{ form.passW}}
+				</div>
+				{{ form.submit }}
+				<label>
+				</label>
+			</div>
+
+		</form>
+
+	</div>
+
+	{% endblock %}
