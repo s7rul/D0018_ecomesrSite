@@ -50,7 +50,6 @@ def addToBasket(whiskyID, count):
             cur.execute("SELECT ID FROM Basket WHERE CustomerID=%s;", (userID,))
 
             basketID = cur.fetchone()
-            basketID = basketID['ID']
 
     finally:
 
@@ -67,12 +66,12 @@ def addToBasket(whiskyID, count):
                 cur.execute("SELECT ID FROM Basket WHERE CustomerID=%s;", (userID,))
 
                 basketID = cur.fetchone()
-                basketID = basketID['ID']
 
         finally:
 
             con.close()
 
+    basketID = basketID['ID']
     con = getConnection()
     try:
         with con.cursor() as cur:
