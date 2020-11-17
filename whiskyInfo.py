@@ -85,3 +85,40 @@ def whiskypage(whiskyID):
     "whiskypage.html",
     title = "Whisky Master",
     message = row)
+
+@app.route('/admin')
+def admin():
+
+
+    #The connection the the server.
+    con = getConnection()
+    # Try to connect to the server and find all values for
+    # whisky tabel.
+    try:
+
+        with con.cursor() as cur:
+
+            whiskyNumber = []
+            whiskyprod = []
+            storageLeft = []
+
+            cur.execute('SELECT * FROM whisky')
+
+            rows = cur.fetchall()
+
+            for row in rows:
+                whiskyNumber.append(row['WhiskyID'])
+                whiskyprod.append(row['WhiskyName'])
+                storageLeft.append(row['StorageLeft'])
+
+
+    finally:
+
+        con.close()
+
+    return render_template(
+    "adminPage.html",
+    title = "Whisky Master",
+    message = whiskyprod,
+    whiskyID = whiskyNumber,
+    storage = storageLeft)
