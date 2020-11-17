@@ -125,7 +125,7 @@ def basketPage():
 
         with con.cursor() as cur:
 
-            cur.execute("SELECT * FROM basketproduct WHERE BasketID IN (SELECT ID FROM basket WHERE CustomerID=%s);", (userID,))
+            cur.execute("SELECT * FROM BasketProduct WHERE BasketID IN (SELECT ID FROM Basket WHERE CustomerID=%s);", (userID,))
 
             row = cur.fetchall()
 
