@@ -1,80 +1,64 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-	<title>Whisky master</title>
-	<style>
-		div {text-align: center;}
-		table.center {
-    		margin-left:auto;
-    		margin-right:auto;
-  		}
-		table, th, td {
-  			border: 1px solid black;
-  			border-collapse: collapse;
-		}
-		th, td {
-			padding: 10px;
-		}
-	</style>
-</head>
-<body>
-	<div>
+﻿{% extends 'layOut.html' %}
 
-		<h2>{{message['WhiskyName']}}</h2>
-		<p> Test test test </p>
+	{% block body %}
 
-		<p>
-			<img class="center" src="/static/{{message['WhiskyID']}}.jpg" width="500em">
-		</p>
-	</div>
-	<div>
 
-		<table class="center">
-			<tr>
-				<th> Price </th>
-				<th> {{message['Price']}} kr</th>
-			</tr>
-			<tr>
-				<th> Nation </th>
-				<th> {{message['Nation']}} </th>
-			</tr>
-			<tr>
-				<th> Distilery </th>
-				<th> {{message['Distillery']}} </th>
-			</tr>
-			{% if message['Region'] != None %}
-			<tr>
-				<th> Region </th>
-				<th> {{message['Region']}} </th>
-			</tr>
-			{% endif %}
-			<tr>
-				<th> Alcohol </th>
-				<th> {{message['Alohol']}} </th>
-			</tr>
-			<tr>
-				<th> In stock </th>
-				<th> {{message['StorageLeft']}} st</th>
-			</tr>
-		</table>
+<div>
 
-	</div>
+	<h2>{{message['WhiskyName']}}</h2>
+	<p> Test test test </p>
+
 	<p>
-		<div>How many would you like to buy?
-		</div>
-		<form action="" method="POST">
-			<div class="container">
-				<div>
-					{{ form.addNumber}}
-				</div>
-				{{ form.submit }}
-				<label>
-				</label>
-			</div>
-
-		</form>
+		<img class="center" src="/static/{{message['WhiskyID']}}.jpg" width="500em">
 	</p>
+</div>
+<div>
 
-</body>
-</html>
+	<table class="center">
+		<tr>
+			<th> Price </th>
+			<th> {{message['Price']}} kr</th>
+		</tr>
+		<tr>
+			<th> Nation </th>
+			<th> {{message['Nation']}} </th>
+		</tr>
+		<tr>
+			<th> Distilery </th>
+			<th> {{message['Distillery']}} </th>
+		</tr>
+		{% if message['Region'] != None %}
+		<tr>
+			<th> Region </th>
+			<th> {{message['Region']}} </th>
+		</tr>
+		{% endif %}
+		<tr>
+			<th> Alcohol </th>
+			<th> {{message['Alohol']}} </th>
+		</tr>
+		<tr>
+			<th> In stock </th>
+			<th> {{message['StorageLeft']}} st</th>
+		</tr>
+	</table>
 
+</div>
+<p>
+	<div>
+		How many would you like to buy?
+	</div>
+	<form action="" method="POST">
+		<div class="container">
+			<div>
+				{{ form.addNumber}}
+			</div>
+			{{ form.submit }}
+			<label>
+			</label>
+		</div>
+
+	</form>
+</p>
+
+{% endblock %}
