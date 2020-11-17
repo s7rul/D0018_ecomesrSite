@@ -64,7 +64,12 @@ def whisky():
 def whiskypage(whiskyID):
     form = AddForm(request.form)
     if (request.method == 'POST'):
-        addToBasket(whiskyID, int(form.addNumber.data))
+        try:
+            count = int(form.addNumber.data)
+        except:
+            return "Wrong input"
+
+        addToBasket(whiskyID, count)
         return redirect('/whisky/' + whiskyID)
     else:
         #The connection the the server.
