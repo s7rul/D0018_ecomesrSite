@@ -27,9 +27,7 @@ def createBasket(userID):
     try:
         with con.cursor() as cur:
 
-            cur.execute("INSERT INTO Basket(
-                    ID, CustomerID)
-                    VALUES (%d, %s)", ((maxID + 1), userID))
+            cur.execute("INSERT INTO Basket( ID, CustomerID) VALUES (%d, %s)", ((maxID + 1), userID))
             cur.commit()
 
     finally:
@@ -90,10 +88,7 @@ def addToBasket(whiskyID, count):
 
         with con.cursor() as cur:
 
-            cur.execute("INSERT INTO BasketProduct(
-                    ID, Quantity, BasketID, ProductNumber)
-                    VALUES (%d, %d, %s, %s)",
-                    ((maxID + 1), count, basketID, whiskyID))
+            cur.execute("INSERT INTO BasketProduct( ID, Quantity, BasketID, ProductNumber) VALUES (%d, %d, %s, %s)", ((maxID + 1), count, basketID, whiskyID))
             cur.commit()
 
     finally:
