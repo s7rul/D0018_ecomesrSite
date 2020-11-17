@@ -20,44 +20,61 @@
 <body>
 	<div>
 
-	<h2>{{message['WhiskyName']}}</h2>
-	<p> Test test test </p>
+		<h2>{{message['WhiskyName']}}</h2>
+		<p> Test test test </p>
 
 		<p>
-		<img class="center" src="/static/{{message['WhiskyID']}}.jpg" width="500em">
+			<img class="center" src="/static/{{message['WhiskyID']}}.jpg" width="500em">
 		</p>
 	</div>
 	<div>
 
-	<table class="center">
-		<tr>
-			<th> Price </th>
-			<th> {{message['Price']}} kr</th>
-		</tr>
-		<tr>
-			<th> Nation </th>
-			<th> {{message['Nation']}} </th>
-		</tr>
-		<tr>
-			<th> Distilery </th>
-			<th> {{message['Distillery']}} </th>
-		</tr>
-		{% if message['Region'] != None %}
-		<tr>
-			<th> Region </th>
-			<th> {{message['Region']}} </th>
-		</tr>
-		{% endif %}
-		<tr>
-			<th> Alcohol </th>
-			<th> {{message['Alohol']}} </th>
-		</tr>
-		<tr>
-			<th> In stock </th>
-			<th> {{message['StorageLeft']}} st</th>
-		</tr>
-	</table>
+		<table class="center">
+			<tr>
+				<th> Price </th>
+				<th> {{message['Price']}} kr</th>
+			</tr>
+			<tr>
+				<th> Nation </th>
+				<th> {{message['Nation']}} </th>
+			</tr>
+			<tr>
+				<th> Distilery </th>
+				<th> {{message['Distillery']}} </th>
+			</tr>
+			{% if message['Region'] != None %}
+			<tr>
+				<th> Region </th>
+				<th> {{message['Region']}} </th>
+			</tr>
+			{% endif %}
+			<tr>
+				<th> Alcohol </th>
+				<th> {{message['Alohol']}} </th>
+			</tr>
+			<tr>
+				<th> In stock </th>
+				<th> {{message['StorageLeft']}} st</th>
+			</tr>
+		</table>
 
 	</div>
+	<p>
+		<div>How many would you like to buy?
+		</div>
+		<form action="" method="POST">
+			<div class="container">
+				<div>
+					{{ form.addNumber}}
+				</div>
+				{{ form.submit }}
+				<label>
+				</label>
+			</div>
+
+		</form>
+	</p>
+
 </body>
 </html>
+
