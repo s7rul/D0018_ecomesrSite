@@ -15,6 +15,8 @@ def createBasket(userID):
             cur.execute("SELECT MAX(ID) FROM Basket;")
 
             maxID = cur.fetchone()
+            print(maxID)
+            maxID = maxID['MAX(ID)']
 
     finally:
 
@@ -26,9 +28,10 @@ def createBasket(userID):
     con = getConnection()
     try:
         with con.cursor() as cur:
-
-            cur.execute("INSERT INTO Basket( ID, CustomerID) VALUES (%d, %s)", ((maxID + 1), userID))
-            cur.commit()
+            maxID = maxID + 1;
+            print(type(maxID))
+            cur.execute("INSERT INTO Basket( ID, CustomerID) VALUES (%s, %s)", (maxID, userID))
+        con.commit()
 
     finally:
 
@@ -44,15 +47,16 @@ def addToBasket(whiskyID, count):
 
         with con.cursor() as cur:
 
-            cur.execute("SELECT * FROM Basket WHERE CustomerID=%s;", (userID,))
+            cur.execute("SELECT ID FROM Basket WHERE CustomerID=%s;", (userID,))
 
-            basket = cur.fetchone()
+            basketID = cur.fetchone()
+            basketID = basketID['ID']
 
     finally:
 
         con.close()
 
-    if basket == None:
+    if basketID == None:
         createBasket(userID)
 
         con = getConnection()
@@ -63,6 +67,7 @@ def addToBasket(whiskyID, count):
                 cur.execute("SELECT ID FROM Basket WHERE CustomerID=%s;", (userID,))
 
                 basketID = cur.fetchone()
+                basketID = basketID['ID']
 
         finally:
 
@@ -75,6 +80,7 @@ def addToBasket(whiskyID, count):
             cur.execute("SELECT MAX(ID) FROM BasketProduct;")
 
             maxID = cur.fetchone()
+            maxID = maxID['MAX(ID)']
 
     finally:
 
@@ -87,9 +93,10 @@ def addToBasket(whiskyID, count):
     try:
 
         with con.cursor() as cur:
+            maxID = maxID + 1
 
-            cur.execute("INSERT INTO BasketProduct( ID, Quantity, BasketID, ProductNumber) VALUES (%d, %d, %s, %s)", ((maxID + 1), count, basketID, whiskyID))
-            cur.commit()
+            cur.execute("INSERT INTO BasketProduct( ID, Quantity, BasketID, ProductNumber) VALUES (%s, %s, %s, %s)", (maxID, count, basketID, whiskyID))
+        con.commit()
 
     finally:
         con.close()

@@ -62,12 +62,11 @@ def whisky():
 
 @app.route('/whisky/<whiskyID>', methods=['GET', 'POST'])
 def whiskypage(whiskyID):
+    form = AddForm(request.form)
     if (request.method == 'POST'):
         addToBasket(whiskyID, int(form.addNumber.data))
+        return redirect('/whisky/' + whiskyID)
     else:
-
-        form = AddForm(request.form)
-
         #The connection the the server.
         con = getConnection()
 
