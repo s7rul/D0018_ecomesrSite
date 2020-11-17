@@ -69,8 +69,10 @@ def whiskypage(whiskyID):
         except:
             return "Wrong input"
 
-        addToBasket(whiskyID, count)
-        return redirect('/whisky/' + whiskyID)
+        if addToBasket(whiskyID, count):
+            return redirect('/whisky/' + whiskyID)
+        else:
+            return redirect('/login')
     else:
         #The connection the the server.
         con = getConnection()

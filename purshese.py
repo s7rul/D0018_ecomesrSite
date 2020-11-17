@@ -15,7 +15,6 @@ def createBasket(userID):
             cur.execute("SELECT MAX(ID) FROM Basket;")
 
             maxID = cur.fetchone()
-            print(maxID)
             maxID = maxID['MAX(ID)']
 
     finally:
@@ -29,7 +28,6 @@ def createBasket(userID):
     try:
         with con.cursor() as cur:
             maxID = maxID + 1;
-            print(type(maxID))
             cur.execute("INSERT INTO Basket( ID, CustomerID) VALUES (%s, %s)", (maxID, userID))
         con.commit()
 
@@ -42,6 +40,10 @@ def createBasket(userID):
 def addToBasket(whiskyID, count):
 
     userID = request.cookies.get('userID')
+
+    if userID == None:
+        return False
+
     con = getConnection()
     try:
 
@@ -99,3 +101,5 @@ def addToBasket(whiskyID, count):
 
     finally:
         con.close()
+
+    return True
