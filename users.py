@@ -6,6 +6,24 @@ import pymysql.cursors
 from HelloFlask.forms.LoginForm import LoginForm
 from HelloFlask.sqlConnection import getConnection
 
+def getUsername():
+    userID = request.cookies.get('userID')
+
+    if userID == None:
+        return None
+
+    con = getConnection()
+    try:
+        with con.cursor() as cur:
+            cur.execute("SELECT UserName FROM customers WHERE CustomerID=%s;", (userID,))
+            name = cur.fetchone()
+            name = name['UserName']
+    finally:
+        con.close()
+
+    return name
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
