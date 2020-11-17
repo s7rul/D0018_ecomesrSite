@@ -6,6 +6,7 @@ import pymysql.cursors
 from HelloFlask.forms.LoginForm import LoginForm
 from HelloFlask.forms.AddForm import AddForm
 from HelloFlask.sqlConnection import getConnection
+from HelloFlask.purshese import addToBasket
 
 @app.route('/')
 @app.route('/home')
@@ -61,33 +62,36 @@ def whisky():
 
 @app.route('/whisky/<whiskyID>', methods=['GET', 'POST'])
 def whiskypage(whiskyID):
+    if (request.method == 'POST'):
+        addToBasket(whiskyID, int(form.addNumber.data))
+    else:
 
-    form = AddForm(request.form)
+        form = AddForm(request.form)
 
-    #The connection the the server.
-    con = getConnection()
+        #The connection the the server.
+        con = getConnection()
 
-    # Try to connect to the server and find all values for
-    # whisky tabel.
-    try:
+        # Try to connect to the server and find all values for
+        # whisky tabel.
+        try:
 
-        with con.cursor() as cur:
+            with con.cursor() as cur:
 
-            cur.execute("SELECT * FROM whisky WHERE WhiskyID=%s;", (str(whiskyID),))
-
-
-            row = cur.fetchone()
+                cur.execute("SELECT * FROM whisky WHERE WhiskyID=%s;", (str(whiskyID),))
 
 
-    finally:
+                row = cur.fetchone()
 
-        con.close()
 
-    return render_template(
-    "whiskypage.html",
-    title = "Whisky Master",
-    message = row,
-    form=form)
+        finally:
+
+            con.close()
+
+        return render_template(
+        "whiskypage.html",
+        title = "Whisky Master",
+        message = row,
+        form=form)
 
 @app.route('/admin')
 def admin():
