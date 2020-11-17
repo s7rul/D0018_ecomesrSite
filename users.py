@@ -125,7 +125,8 @@ def basketPage():
 
         with con.cursor() as cur:
 
-            cur.execute("SELECT * FROM BasketProduct WHERE BasketID IN (SELECT ID FROM Basket WHERE CustomerID=%s);", (userID,))
+            cur.execute(" create temporary table basketTmp(SELECT * FROM BasketProduct WHERE BasketID IN (SELECT ID FROM Basket WHERE CustomerID=%s));", (userID,))
+            cur.execute("select * from whisky inner join basketTmp on whisky.WhiskyID=basketTmp.ProductNumber;")
 
             row = cur.fetchall()
 

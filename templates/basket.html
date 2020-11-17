@@ -9,13 +9,17 @@
 		<h2>Whisky Master</h2>
 		<p>Your Basket it here</p>
 
+		<table class="center">
 
 		{% for item in basket %}
-		<!--Jinja Loop starts at 1 and not zero-->
-		<p>
-			{{item['ProductNumber']}} {{item['Quantity']}}
-		</p>
+		<tr>
+			<th> {{item['WhiskyName']}} </th>
+			<th> {{item['Quantity']}} st </th>
+			<th> {{item['Price']}} kr/st </th>
+		</tr>
 		{% endfor %}
+
+		</table>
 
 	</div>
 
