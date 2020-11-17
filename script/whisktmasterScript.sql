@@ -147,7 +147,7 @@ CREATE TABLE whiskymaster.admins
     
 CREATE TABLE whiskymaster.Basket
 (
-	ID			VARCHAR(15)		NOT Null,
+	ID			int		NOT Null,
     CustomerID	VARCHAR(15)		NOT NUll,
     
     PRIMARY KEY(ID),
@@ -157,7 +157,7 @@ CREATE TABLE whiskymaster.Basket
     
 CREATE TABLE whiskymaster.BasketProduct
 (
-	ID				VARCHAR(15)		NOT Null,
+	ID				int				NOT Null,
     Quantity		int				NOT Null,
 	BasketID		VARCHAR(15)		NOT NUll,
     ProductNumber	VARCHAR(15)		NOT NUll,
