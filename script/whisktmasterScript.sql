@@ -170,3 +170,5 @@ CREATE TABLE whiskymaster.BasketProduct
 
 
 #UPDATE whiskymaster.whisky SET StorageLeft=120 WHERE WhiskyID='1';
+
+SELECT * FROM basketproduct WHERE ID IN (SELECT ID FROM basket WHERE CustomerID=0);

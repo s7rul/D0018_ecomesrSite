@@ -1,0 +1,25 @@
+﻿{% extends 'layOut.html' %}
+
+	{% block body %}
+
+
+
+	<div>
+
+		<h2>Whisky Master</h2>
+		<p>Your Basket it here</p>
+
+
+		{% for item in basket %}
+		<!--Jinja Loop starts at 1 and not zero-->
+		<p>
+			{{item['ProductNumber']}} {{item['Quantity']}}
+		</p>
+		{% endfor %}
+
+	</div>
+
+
+
+
+{% endblock %}

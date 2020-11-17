@@ -106,3 +106,35 @@ def userPageURL(userID):
     "userPage.html",
     title = "Whisky Master",
     customer = row)
+
+
+@app.route('/basket')
+def basketPage():
+
+    userID = request.cookies.get('userID')
+
+    if userID==None:
+        return redirect("/login")
+
+    #The connection the the server.
+    con = getConnection()
+
+    # Try to connect to the server and find all values for
+    # whisky tabel.
+    try:
+
+        with con.cursor() as cur:
+
+            cur.execute("SELECT * FROM basketproduct WHERE BasketID IN (SELECT ID FROM basket WHERE CustomerID=%s);", (userID,))
+
+            row = cur.fetchall()
+
+
+    finally:
+
+        con.close()
+
+    return render_template(
+    "basket.html",
+    title = "Whisky Master",
+    basket = row)
