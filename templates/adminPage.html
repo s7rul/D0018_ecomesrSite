@@ -1,6 +1,24 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
     <title>Whisky master</title>
     <style>
         div {
@@ -12,17 +30,25 @@
     <div>
 
         <h2>Whisky Master</h2>
-        <p>Here we sell Whisky to companies</p>
+        <p>This is the admin Page</p>
 
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Storage Left</th>
+            </tr>
 
-        {% for item in message %}
-        <!--Jinja Loop starts at 1 and not zero-->
-        <p>
-            {{whiskyID[loop.index-1]}}
-            <a href="../whisky/{{whiskyID[loop.index-1]}}">{{ item }}</a>
-            {{storage[loop.index-1]}}
-        </p>
-        {% endfor %}
+            {% for item in message %}
+            <!--Jinja Loop starts at 1 and not zero-->
+            <tr>
+                <td>{{whiskyID[loop.index-1]}}</td>
+                <td><a href="../whisky/{{whiskyID[loop.index-1]}}">{{ item }}</a></td>
+                <td>{{storage[loop.index-1]}}</td>
+            </tr>
+            {% endfor %}
+
+            </table>
 
     </div>
 </body>
