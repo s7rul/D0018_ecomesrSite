@@ -4,6 +4,7 @@ from HelloFlask import app
 import pymysql
 import pymysql.cursors
 from HelloFlask.forms.LoginForm import LoginForm
+from HelloFlask.forms.AddForm import AddForm
 from HelloFlask.sqlConnection import getConnection
 
 @app.route('/')
@@ -58,9 +59,10 @@ def whisky():
     message = whiskyprod,
     whiskyID = whiskyNumber)
 
-@app.route('/whisky/<whiskyID>')
+@app.route('/whisky/<whiskyID>', methods=['GET', 'POST'])
 def whiskypage(whiskyID):
 
+    form = AddForm(request.form)
 
     #The connection the the server.
     con = getConnection()
@@ -84,7 +86,8 @@ def whiskypage(whiskyID):
     return render_template(
     "whiskypage.html",
     title = "Whisky Master",
-    message = row)
+    message = row,
+    form=form)
 
 @app.route('/admin')
 def admin():
