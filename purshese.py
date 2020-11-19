@@ -9,26 +9,15 @@ from HelloFlask.sqlConnection import getConnection
 
 def createBasket(userID):
     con = getConnection()
+
     try:
         with con.cursor() as cur:
-
-            cur.execute("SELECT MAX(ID) FROM Basket;")
-
-            maxID = cur.fetchone()
-            maxID = maxID['MAX(ID)']
-
-    finally:
-
-        con.close()
-
-    if maxID == None:
-        maxID = 0;
-
-    con = getConnection()
-    try:
-        with con.cursor() as cur:
-            maxID = maxID + 1;
-            cur.execute("INSERT INTO Basket( ID, CustomerID) VALUES (%s, %s)", (maxID, userID))
+            cur.execute("SELECT ID FROM Basket WHERE CustomerID = %s;", (userID,))
+            check = cur.fetchone()
+            if check != None:
+                return
+            cur.execute(" SET @id = IF(EXISTS(SELECT ID FROM Basket), ((SELECT MAX(ID) FROM Basket) + 1), 0);")
+            cur.execute("INSERT INTO Basket( ID, CustomerID) VALUES (@id, %s);", (userID,))
         con.commit()
 
     finally:
