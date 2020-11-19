@@ -11,8 +11,17 @@
 
 	<table class="center">
 
-		{% for item in basket %}
 		<tr>
+
+			<th>ID</th>
+			<th>NAME</th>
+			<th>Quantity</th>
+			<th>Price</th>
+
+		</tr>
+			{% for item in basket %}
+		<tr>
+			<th> {{item['WhiskyID']}}</th>
 			<th> {{item['WhiskyName']}} </th>
 			<th> {{item['Quantity']}} st </th>
 			<th> {{item['Price']}} kr/st </th>
@@ -21,7 +30,7 @@
 		</tr>
 		{% endfor %}
 
-		<th> Total Price </th>
+		<th colspan="2"> Total Price </th>
 		<th colspan="2"> {{price}} kr </th>
 
 	</table>
