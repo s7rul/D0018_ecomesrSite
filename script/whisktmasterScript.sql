@@ -181,3 +181,5 @@ CREATE TABLE whiskymaster.BasketProduct
 #Drop table basketPrice;
 
 #SELECT SUM(Price * Quantity) FROM basketPrice;
+
+#SELECT ProductNumber, SUM(Quantity) AS Quantity, COUNT(ProductNumber) AS COUNT FROM  whiskymaster.BasketProduct GROUP BY ProductNumber;
