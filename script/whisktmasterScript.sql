@@ -11,7 +11,7 @@ CREATE TABLE whiskymaster.whisky
 (
 	WhiskyID	VARCHAR(15)		NOT NULL,
     WhiskyName	VARCHAR(100)	NOT NULL,
-    Price		VARCHAR(255)	NOT NULL,
+    Price		int				NOT NULL,
     StorageLeft int				NOT NULL,
     Nation		VARCHAR(255),
     Distillery	VARCHAR(255),
@@ -27,27 +27,27 @@ CREATE TABLE whiskymaster.whisky
     
 INSERT INTO whiskymaster.whisky(WhiskyID, WhiskyName, Price, StorageLeft,
 Nation, Distillery, Alohol, Region)
-VALUES('1','Nikka Tailord', '1100', 5, 'Japan', 'Nikka', '43.0%', 'Test');
+VALUES('1','Nikka Tailord', 1100, 5, 'Japan', 'Nikka', '43.0%', 'Test');
 
 INSERT INTO whiskymaster.whisky(WhiskyID, WhiskyName, Price, StorageLeft,
 Nation, Distillery, Alohol)
-VALUES('2','Caol Ila The Maltman 6 Years', '900', 10, 'Scotland', 'Caol Ila', '51.6%');
+VALUES('2','Caol Ila The Maltman 6 Years', 900, 10, 'Scotland', 'Caol Ila', '51.6%');
 
 INSERT INTO whiskymaster.whisky(WhiskyID, WhiskyName, Price, StorageLeft,
 Nation, Distillery, Alohol)
-VALUES('3','Penderyn Oloroso Sherry Finish', '800', 5, 'Scotland', 'Penderyn', '59.2%');
+VALUES('3','Penderyn Oloroso Sherry Finish', 800, 5, 'Scotland', 'Penderyn', '59.2%');
 
 INSERT INTO whiskymaster.whisky(WhiskyID, WhiskyName, Price, StorageLeft,
 Nation, Distillery, Alohol)
-VALUES('4','Hibiki Japanese Harmony', '750', 5, 'Japan', 'Suntory Whisky', '43%');
+VALUES('4','Hibiki Japanese Harmony', 750, 5, 'Japan', 'Suntory Whisky', '43%');
 
 INSERT INTO whiskymaster.whisky(WhiskyID, WhiskyName, Price, StorageLeft,
 Nation, Distillery, Alohol)
-VALUES('5','Bunnahabhain 18', '1300', 3, 'Scotland', 'Bunnahabhain', '46.3%');
+VALUES('5','Bunnahabhain 18', 1300, 3, 'Scotland', 'Bunnahabhain', '46.3%');
 
 INSERT INTO whiskymaster.whisky(WhiskyID, WhiskyName, Price, StorageLeft,
 Nation, Distillery, Alohol)
-VALUES('6','Glenfiddich 21 Reserva Rum Cask Finish', '1400', 2, 'Scotland', 'Glenfiddich', '43.2%');
+VALUES('6','Glenfiddich 21 Reserva Rum Cask Finish', 1400, 2, 'Scotland', 'Glenfiddich', '43.2%');
 
 CREATE TABLE whiskymaster.customers
 (
@@ -112,6 +112,7 @@ CREATE TABLE whiskymaster.reservedProduct
     ReservedID		VARCHAR(15)		NOT Null,
     Quantity		int				NOT NUll,
     ProductNumber	VARCHAR(15)		NOT NUll,
+    Price			int				NOT NULL,
     
     PRIMARY KEY(ID),
     FOREIGN KEY (ReservedID) REFERENCES whiskymaster.reserved(ReservedID),
@@ -171,4 +172,4 @@ CREATE TABLE whiskymaster.BasketProduct
 
 #UPDATE whiskymaster.whisky SET StorageLeft=120 WHERE WhiskyID='1';
 
-SELECT * FROM basketproduct WHERE BasketID IN (SELECT ID FROM basket WHERE CustomerID=0);
+#SELECT * FROM basketproduct WHERE BasketID IN (SELECT ID FROM basket WHERE CustomerID=0);
