@@ -4,24 +4,29 @@
 
 
 
-	<div>
+<div>
 
-		<h2>Whisky Master</h2>
-		<p>Your Basket it here</p>
+	<h2>Whisky Master</h2>
+	<p>Your Basket it here</p>
 
-		<table class="center">
+	<table class="center">
 
 		{% for item in basket %}
 		<tr>
 			<th> {{item['WhiskyName']}} </th>
 			<th> {{item['Quantity']}} st </th>
 			<th> {{item['Price']}} kr/st </th>
+
+
 		</tr>
 		{% endfor %}
 
-		</table>
+		<th> Total Price </th>
+		<th> {{price}} kr </th>
 
-	</div>
+	</table>
+
+</div>
 
 
 

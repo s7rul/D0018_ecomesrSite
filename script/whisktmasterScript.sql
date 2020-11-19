@@ -173,3 +173,11 @@ CREATE TABLE whiskymaster.BasketProduct
 #UPDATE whiskymaster.whisky SET StorageLeft=120 WHERE WhiskyID='1';
 
 #SELECT * FROM basketproduct WHERE BasketID IN (SELECT ID FROM basket WHERE CustomerID=0);
+
+#SELECT SUM(Price) FROM whiskymaster.whisky;
+#create temporary table basketTmp(SELECT * FROM whiskymaster.BasketProduct WHERE BasketID IN (SELECT ID FROM Basket WHERE CustomerID=0));
+#select * from whisky inner join basketTmp on whisky.WhiskyID=basketTmp.ProductNumber;
+#create temporary table basketPrice(SELECT * FROM whisky inner join basketTmp on  whisky.WhiskyID=basketTmp.ProductNumber);
+#Drop table basketPrice;
+
+#SELECT SUM(Price * Quantity) FROM basketPrice;

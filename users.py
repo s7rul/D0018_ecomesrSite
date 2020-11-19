@@ -141,13 +141,25 @@ def basketPage():
     # whisky tabel.
     try:
 
+
         with con.cursor() as cur:
 
             cur.execute(" create temporary table basketTmp(SELECT * FROM BasketProduct WHERE BasketID IN (SELECT ID FROM Basket WHERE CustomerID=%s));", (userID,))
             cur.execute("select * from whisky inner join basketTmp on whisky.WhiskyID=basketTmp.ProductNumber;")
 
-
             row = cur.fetchall()
+
+            print(row)
+
+            cur.execute("create temporary table basketPrice(SELECT * FROM whisky inner join basketTmp on  whisky.WhiskyID=basketTmp.ProductNumber);")
+            cur.execute("SELECT SUM(Price * Quantity) FROM basketPrice;")
+
+            price = cur.fetchone()
+            price = price['SUM(Price * Quantity)']
+
+            print(price)
+
+
 
 
     finally:
@@ -157,4 +169,5 @@ def basketPage():
     return render_template(
     "basket.html",
     title = "Whisky Master",
-    basket = row)
+    basket = row,
+    price = price)
