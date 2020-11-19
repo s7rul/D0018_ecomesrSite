@@ -42,7 +42,7 @@ def addToBasket(whiskyID, count):
             cur.execute("SET @basketid = (SELECT ID from Basket WHERE CustomerID = %s);", (userID,))
             cur.execute("SELECT ProductNumber FROM BasketProduct WHERE ProductNumber = %s AND BasketID = @basketid;", (whiskyID,))
             if cur.fetchone() == None:
-                cur.execute("SET @id = IF(EXISTS(SELECT ID FROM Basket), ((SELECT MAX(ID) FROM BasketProduct) + 1), 0);")
+                cur.execute("SET @id = IF(EXISTS(SELECT ID FROM BasketProduct), ((SELECT MAX(ID) FROM BasketProduct) + 1), 0);")
                 cur.execute("INSERT INTO BasketProduct( ID, Quantity, BasketID, ProductNumber) VALUES (@id, %s, @basketid, %s)", (count, whiskyID))
             else:
                 cur.execute("UPDATE BasketProduct SET Quantity=(Quantity + %s) WHERE ProductNumber = %s AND BasketID = @basketid;", (count, whiskyID))
