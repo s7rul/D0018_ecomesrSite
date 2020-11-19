@@ -5,6 +5,7 @@ import pymysql
 import pymysql.cursors
 from HelloFlask.forms.LoginForm import LoginForm
 from HelloFlask.sqlConnection import getConnection
+from HelloFlask.forms.BasketForm import BasketFormList, BasketForm
 
 def getUsername():
     userID = request.cookies.get('userID')
@@ -126,16 +127,38 @@ def userPageURL(userID):
     customer = row)
 
 
-@app.route('/basket')
+@app.route('/basket', methods=['GET', 'POST'])
 def basketPage():
 
     userID = request.cookies.get('userID')
+
+    if request.method == 'POST':
+        delID = (next(iter(request.form)))
+        con = getConnection()
+
+
+        # Try to connect to the server and find all values for
+        # whisky tabel.
+        try:
+
+
+            with con.cursor() as cur:
+
+                cur.execute("DELETE FROM BasketProduct WHERE ID = %s;", (delID, ))
+            con.commit()
+
+        finally:
+            con.close()
+
+        return redirect('/basket')
+
 
     if userID==None:
         return redirect("/login")
 
     #The connection the the server.
     con = getConnection()
+
 
     # Try to connect to the server and find all values for
     # whisky tabel.
@@ -149,22 +172,19 @@ def basketPage():
 
             row = cur.fetchall()
 
-            print(row)
-
             cur.execute("create temporary table basketPrice(SELECT * FROM whisky inner join basketTmp on  whisky.WhiskyID=basketTmp.ProductNumber);")
             cur.execute("SELECT SUM(Price * Quantity) FROM basketPrice;")
 
             price = cur.fetchone()
             price = price['SUM(Price * Quantity)']
 
-            print(price)
-
-
 
 
     finally:
 
         con.close()
+
+
 
     return render_template(
     "basket.html",

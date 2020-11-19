@@ -25,6 +25,11 @@
 			<th> {{item['WhiskyName']}} </th>
 			<th> {{item['Quantity']}} st </th>
 			<th> {{item['Price']}} kr/st </th>
+			<th>
+				<form action="" method="post">
+					<input type="submit" value="Delete" name="{{item['ID']}}" />
+				</form>
+			</th>
 		</tr>
 		{% endfor %}
 
@@ -32,6 +37,7 @@
 		<th colspan="2"> {{price}} kr </th>
 
 	</table>
+
 
 </div>
 
