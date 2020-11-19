@@ -5,7 +5,6 @@ import pymysql
 import pymysql.cursors
 from HelloFlask.forms.LoginForm import LoginForm
 from HelloFlask.sqlConnection import getConnection
-from HelloFlask.forms.BasketForm import BasketFormList, BasketForm
 
 def getUsername():
     userID = request.cookies.get('userID')
