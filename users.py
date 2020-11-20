@@ -132,22 +132,31 @@ def basketPage():
     userID = request.cookies.get('userID')
 
     if request.method == 'POST':
-        delID = (next(iter(request.form)))
+        print(request.form)
+        modID = (next(iter(request.form)))
+        qvant = request.form[modID]
+        print("ID " + modID + "\nQ: " + qvant)
+        if qvant == '' or int(qvant) < 0:
+            return redirect('/basket')
+
         con = getConnection()
 
+        if qvant == '0':
+            try:
+                with con.cursor() as cur:
+                    cur.execute("DELETE FROM BasketProduct WHERE ID = %s;", (modID, ))
+                con.commit()
 
-        # Try to connect to the server and find all values for
-        # whisky tabel.
-        try:
+            finally:
+                con.close()
+        else:
+            try:
+                with con.cursor() as cur:
+                    cur.execute("UPDATE BasketProduct SET Quantity=%s WHERE ID = %s;", (qvant, modID))
+                con.commit()
 
-
-            with con.cursor() as cur:
-
-                cur.execute("DELETE FROM BasketProduct WHERE ID = %s;", (delID, ))
-            con.commit()
-
-        finally:
-            con.close()
+            finally:
+                con.close()
 
         return redirect('/basket')
 
