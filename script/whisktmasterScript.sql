@@ -183,3 +183,7 @@ CREATE TABLE whiskymaster.BasketProduct
 #SELECT SUM(Price * Quantity) FROM basketPrice;
 
 #SELECT ProductNumber, SUM(Quantity) AS Quantity, COUNT(ProductNumber) AS COUNT FROM  whiskymaster.BasketProduct GROUP BY ProductNumber;
+
+
+
+UPDATE whiskymaster.Whisky SET StorageLeft = 15 WHERE WhiskyID = '1';

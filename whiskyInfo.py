@@ -99,8 +99,30 @@ def whiskypage(whiskyID):
         message = row,
         form=form)
 
-@app.route('/admin')
+@app.route('/admin', methods=['GET', 'POST'])
 def admin():
+
+
+
+    if request.method == 'POST':
+        modID = (next(iter(request.form)))
+        qvant = request.form[modID]
+        if qvant == '' or int(qvant) < 0:
+            return redirect('/basket')
+
+        con = getConnection()
+
+        try:
+            with con.cursor() as cur:
+                cur.execute("UPDATE whiskymaster.Whisky SET StorageLeft=%s WHERE WhiskyID = %s;", (qvant, modID))
+                con.commit()
+
+        finally:
+            con.close()
+
+        return redirect('/admin')
+
+
 
 
     #The connection the the server.
@@ -109,20 +131,13 @@ def admin():
     # whisky tabel.
     try:
 
+        #Just want to fetch all the inventory.
         with con.cursor() as cur:
-
-            whiskyNumber = []
-            whiskyprod = []
-            storageLeft = []
 
             cur.execute('SELECT * FROM whisky')
 
             rows = cur.fetchall()
 
-            for row in rows:
-                whiskyNumber.append(row['WhiskyID'])
-                whiskyprod.append(row['WhiskyName'])
-                storageLeft.append(row['StorageLeft'])
 
 
     finally:
@@ -132,6 +147,4 @@ def admin():
     return render_template(
     "adminPage.html",
     title = "Whisky Master",
-    message = whiskyprod,
-    whiskyID = whiskyNumber,
-    storage = storageLeft)
+    inventory = rows)

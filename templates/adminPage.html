@@ -37,18 +37,24 @@ tr:nth-child(even) {
                 <th>ID</th>
                 <th>Name</th>
                 <th>Storage Left</th>
+                <th>Price</th>
             </tr>
 
-            {% for item in message %}
+            {% for item in inventory %}
             <!--Jinja Loop starts at 1 and not zero-->
             <tr>
-                <td>{{whiskyID[loop.index-1]}}</td>
-                <td><a href="../whisky/{{whiskyID[loop.index-1]}}">{{ item }}</a></td>
-                <td>{{storage[loop.index-1]}}</td>
+                <th> {{item['WhiskyID']}}</th>
+                <th> {{item['WhiskyName']}} </th>
+                <th>
+                    <form action="" method="post">
+                        <input type="number" placeholder={{item['StorageLeft']}} name="{{item['WhiskyID']}}" />
+                    </form>
+                </th>
+                <th> {{item['Price']}} kr/st </th>
             </tr>
             {% endfor %}
 
-            </table>
+        </table>
 
     </div>
 </body>
