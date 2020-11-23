@@ -148,3 +148,21 @@ def admin():
     "adminPage.html",
     title = "Whisky Master",
     inventory = rows)
+
+@app.route('/admin/editwhisky/<id>', methods=['GET', 'POST'])
+def editWhiskuPage(id):
+    if request.method == 'POST':
+        print(request.form)
+
+    con = getConnection()
+
+    # Try to connect to the server and find all values for
+    # whisky tabel.
+    try:
+        with con.cursor() as cur:
+            cur.execute("SELECT * FROM whisky WHERE WhiskyID=%s;", (str(id),))
+            whisky = cur.fetchone()
+    finally:
+        con.close()
+
+    return render_template("editwhisky.html", whisky=whisky)

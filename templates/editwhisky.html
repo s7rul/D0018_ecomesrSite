@@ -1,0 +1,70 @@
+{% extends 'layOut.html' %}
+
+{% block body %}
+
+<div>
+	<h2> Edit Whisky </h2>
+</div>
+
+<div>
+
+	<table class="center">
+		<tr>
+			<th> Name </th>
+			<th>
+				<form action="" method="post">
+					<input type="number" placeholder={{whisky['WhiskyName']}} name="Name" />
+				</form>
+			</th>
+		<tr>
+			<th> Price </th>
+			<th>
+				<form action="" method="post">
+					<input type="number" placeholder={{whisky['Price']}} name="Price" />
+				</form>
+			</th>
+		</tr>
+		<tr>
+			<th> Nation </th>
+			<th>
+				<form action="" method="post">
+					<input type="number" placeholder={{whisky['Nation']}} name="Nation" />
+				</form>
+			</th>
+		</tr>
+		<tr>
+			<th> Distilery </th>
+			<th>
+				<form action="" method="post">
+					<input type="number" placeholder={{whisky['Distillery']}} name="Distilery" />
+				</form>
+			</th>
+		</tr>
+		<tr>
+			<th> Region </th>
+			<th>
+				<form action="" method="post">
+					<input type="number" placeholder={{whisky['Region']}} name="Region" />
+				</form>
+			</th>
+		</tr>
+		<tr>
+			<th> Alcohol </th>
+			<th>
+				<form action="" method="post">
+					<input type="number" placeholder={{whisky['Alohol']}} name="Alcohol" />
+				</form>
+			</th>
+		</tr>
+		<tr>
+			<th> In stock </th>
+			<th>
+				<form action="" method="post">
+					<input type="number" placeholder={{whisky['StorageLeft']}} name="Quantity" />
+				</form>
+			</th>
+		</tr>
+	</table>
+
+</div>
+{% endblock %}
