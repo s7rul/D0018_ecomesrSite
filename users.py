@@ -43,17 +43,18 @@ def login():
 
                 row = cur.fetchone()
 
-                if row == None:
-                    return "You done Goffed"
-                    
-                else:
-                    return userPageLogin(row['CustomerID'])
-                    #return redirect('/user/'+ row['CustomerID'])
+                
 
 
 
         finally:
             con.close()
+
+        if row == None:
+            return "You done Goffed"
+              
+        else:
+            return userPageLogin(row['CustomerID'])
         
     return render_template(
     "login.html",

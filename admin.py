@@ -22,6 +22,8 @@ def loginAdmin():
         con = getConnection()
         # Try to connect to the server and find all values for
         # whisky tabel.
+        row = None
+
         try:
             with con.cursor() as cur:
 
@@ -29,24 +31,26 @@ def loginAdmin():
 
                 row = cur.fetchone()
 
-                if row == None:
-                    return "You done Goffed"
-                    
-                else:
-                    return "Foudn the User"
-
-
-
 
         finally:
             con.close()
+
+        id = row['ID']
+
+        if row == None:
+            return "You done Goffed"
+                    
+        else:
+            return userPageLoginAdmin(row['ID'])
         
+
     return render_template(
     "adminLogin.html",
     form=form)
 
 
 def userPageLoginAdmin(ID):
+
     #The connection the the server.
     con = getConnection()
 
@@ -56,26 +60,30 @@ def userPageLoginAdmin(ID):
 
         with con.cursor() as cur:
 
-            cur.execute("SELECT * FROM admins WHERE CustomerID=%s;", (ID,))
+            cur.execute('SELECT * FROM whisky')
 
-            row = cur.fetchone()
+            rows = cur.fetchall()
 
     finally:
 
         con.close()
 
     ret = make_response(render_template(
-    "admin.html",
+    "adminPage.html",
     title = "Whisky Master",
-    customer = row))
+    inventory = rows))
     #set the cookie
-    ret.set_cookie('userID', ID)
+    ret.set_cookie('adminID', ID)
     return ret
+
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
 
+    adminID = request.cookies.get('adminID')
 
+    if adminID == None:
+        return redirect('/admin/login')
 
     if request.method == 'POST':
         modID = (next(iter(request.form)))
@@ -110,7 +118,6 @@ def admin():
             cur.execute('SELECT * FROM whisky')
 
             rows = cur.fetchall()
-
 
 
     finally:
