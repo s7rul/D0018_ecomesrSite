@@ -114,7 +114,7 @@ def admin():
 
         try:
             with con.cursor() as cur:
-                cur.execute("UPDATE whiskymaster.Whisky SET StorageLeft=%s WHERE WhiskyID = %s;", (qvant, modID))
+                cur.execute("UPDATE whisky SET StorageLeft=%s WHERE WhiskyID = %s;", (qvant, modID))
                 con.commit()
 
         finally:
