@@ -45,10 +45,10 @@
 
 </div>
 <p>
+	{% if message['StorageLeft'] > 0 %}
 	<div>
 		How many would you like to buy?
 	</div>
-	{% if message['StorageLeft'] > 0 %}
 	<form action="" method="POST">
 		<div class="container">
 			<div>
@@ -64,7 +64,7 @@
 		Sorry We are out of stock right now.
 	</div>
 	{% endif %}
-	
+
 </p>
 
 
