@@ -186,4 +186,4 @@ CREATE TABLE whiskymaster.BasketProduct
 
 
 
-UPDATE whiskymaster.Whisky SET StorageLeft = 15 WHERE WhiskyID = '1';
+#UPDATE whiskymaster.Whisky SET StorageLeft = 15 WHERE WhiskyID = '1';

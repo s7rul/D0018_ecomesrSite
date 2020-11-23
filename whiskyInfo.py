@@ -108,7 +108,7 @@ def admin():
         modID = (next(iter(request.form)))
         qvant = request.form[modID]
         if qvant == '' or int(qvant) < 0:
-            return redirect('/basket')
+            return redirect('/admin')
 
         con = getConnection()
 
