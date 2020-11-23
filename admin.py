@@ -122,10 +122,50 @@ def admin():
     title = "Whisky Master",
     inventory = rows)
 
-@app.route('/admin/editwhisky/<id>', methods=['GET', 'POST'])
-def editWhiskuPage(id):
+
+"""def editWhiskyParameter(field, value):
+
+    con = getConnection()
+    if field == 'WhiskyID':
+    elif field == 'WhiskyName':
+        print("t")
+    elif field == 'Price':
+    elif field == 'Nation':
+    elif field == 'StorageLeft':
+    elif field == 'StorageLeft':
+    Nation		VARCHAR(255),
+    Distillery	VARCHAR(255),
+    Region		VARCHAR(255),
+    Alohol		VARCHAR(10)		NOT NULL,
+    Sold		int,
+    
+    #Placeholder
+    Picture 	VARCHAR(255),
+    try:
+        with con.cursor() as cur:
+            cur.execute("UPDATE whisky SET %s=%s WHERE WhiskyID = %s;", (value, id))
+            con.commit()
+    finally:
+        con.close()"""
+
+
+@app.route('/admin/editwhisky/<wid>', methods=['GET', 'POST'])
+def editWhiskuPage(wid):
     if request.method == 'POST':
-        print(request.form)
+        field = next(iter(request.form))
+        value = request.form[field]
+
+        if value == "":
+            return redirect('/admin/editwhisky/' + str(wid))
+
+        con = getConnection()
+        try:
+            with con.cursor() as cur:
+                cur.execute(("UPDATE whisky SET " + field + "=%s WHERE WhiskyID = %s;"),(value, wid))
+                con.commit()
+        finally:
+            con.close()
+
 
     con = getConnection()
 
@@ -133,7 +173,7 @@ def editWhiskuPage(id):
     # whisky tabel.
     try:
         with con.cursor() as cur:
-            cur.execute("SELECT * FROM whisky WHERE WhiskyID=%s;", (str(id),))
+            cur.execute("SELECT * FROM whisky WHERE WhiskyID=%s;", (str(wid),))
             whisky = cur.fetchone()
     finally:
         con.close()
