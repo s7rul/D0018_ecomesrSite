@@ -35,8 +35,6 @@ def loginAdmin():
         finally:
             con.close()
 
-        id = row['ID']
-
         if row == None:
             return "You done Goffed"
                     

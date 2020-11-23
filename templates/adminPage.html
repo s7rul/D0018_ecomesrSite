@@ -44,7 +44,7 @@ tr:nth-child(even) {
             <!--Jinja Loop starts at 1 and not zero-->
             <tr>
                 <th> {{item['WhiskyID']}}</th>
-				<th> <a href="admin/editwhisky/{{item['WhiskyID']}}">{{item['WhiskyName']}}</a> </th>
+				<th> <a href="/admin/editwhisky/{{item['WhiskyID']}}">{{item['WhiskyName']}}</a> </th>
                 <th>
                     <form action="" method="post">
                         <input type="number" placeholder={{item['StorageLeft']}} name="{{item['WhiskyID']}}" />
