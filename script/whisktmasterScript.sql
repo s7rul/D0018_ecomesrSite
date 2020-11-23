@@ -146,6 +146,9 @@ CREATE TABLE whiskymaster.admins
     
 	);
     
+INSERT INTO whiskymaster.admins(ID, UserName, Passw, FirstName)
+VALUES('0', 'admin', 'admin', 'adminsson');
+    
 CREATE TABLE whiskymaster.Basket
 (
 	ID			int				NOT Null,

@@ -11,6 +11,8 @@ import HelloFlask.users
 
 import HelloFlask.whiskyInfo
 
+import HelloFlask.admin
+
 
 #A generic succsess page used for testing
 @app.route('/succsess/<data>')
