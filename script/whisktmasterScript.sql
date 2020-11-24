@@ -9,7 +9,7 @@ GRANT ALL PRIVILEGES ON whiskymaster.* TO 'whiskymaster'@'localhost';
 
 CREATE TABLE whiskymaster.whisky
 (
-	WhiskyID	VARCHAR(15)		NOT NULL,
+	WhiskyID	int				NOT NULL,
     WhiskyName	VARCHAR(100)	NOT NULL,
     Price		int				NOT NULL,
     StorageLeft int				NOT NULL,

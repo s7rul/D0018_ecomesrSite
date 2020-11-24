@@ -195,9 +195,14 @@ def addWhiskyPage():
         try:
             with con.cursor() as cur:
                 cur.execute("SET @id = IF(EXISTS(SELECT WhiskyID FROM whisky), ((SELECT MAX(WhiskyID) FROM whisky) + 1), 0);")
-                cur.execute("""INSERT INTO whisky(WhiskyID, WhiskyName, Price, StorageLeft, Nation, Distillery, Region, Alohol, Picture)
-                    VALUES (@id, %s, %s, %s, %s, %s, %s, %s, %s)""",
-                    (form['WhiskyName'], form['Price'], form['StorageLeft'], form['Nation'], form['Distillery'], form['Region'], form['Alohol'], '0'))
+                if form['Region'] != "":
+                    cur.execute("""INSERT INTO whisky(WhiskyID, WhiskyName, Price, StorageLeft, Nation, Distillery, Region, Alohol, Picture)
+                        VALUES (@id, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                        (form['WhiskyName'], form['Price'], form['StorageLeft'], form['Nation'], form['Distillery'], form['Region'], form['Alohol'], '0'))
+                else:
+                    cur.execute("""INSERT INTO whisky(WhiskyID, WhiskyName, Price, StorageLeft, Nation, Distillery, Alohol, Picture)
+                        VALUES (@id, %s, %s, %s, %s, %s, %s, %s)""",
+                        (form['WhiskyName'], form['Price'], form['StorageLeft'], form['Nation'], form['Distillery'], form['Alohol'], '0'))
             con.commit()
         finally:
             con.close()
