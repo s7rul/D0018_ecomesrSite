@@ -65,6 +65,19 @@
 			</th>
 		</tr>
 	</table>
+	{%if whisky['Active'] == True%}
+		<div>
+			<form action="" method="post">
+				<input type="submit" name="dont" value="Don't Carry" />
+			</form>
+		</div>
+	{%else%}
+		<div>
+			<form action="" method="post">
+				<input type="submit" name="do" value="Carry" />
+			</form>
+		</div>
+	{%endif%}
 
 </div>
 {% endblock %}

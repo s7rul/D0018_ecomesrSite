@@ -131,31 +131,6 @@ def admin():
     inventory = rows)
 
 
-"""def editWhiskyParameter(field, value):
-
-    con = getConnection()
-    if field == 'WhiskyID':
-    elif field == 'WhiskyName':
-        print("t")
-    elif field == 'Price':
-    elif field == 'Nation':
-    elif field == 'StorageLeft':
-    elif field == 'StorageLeft':
-    Nation		VARCHAR(255),
-    Distillery	VARCHAR(255),
-    Region		VARCHAR(255),
-    Alohol		VARCHAR(10)		NOT NULL,
-    Sold		int,
-    
-    #Placeholder
-    Picture 	VARCHAR(255),
-    try:
-        with con.cursor() as cur:
-            cur.execute("UPDATE whisky SET %s=%s WHERE WhiskyID = %s;", (value, id))
-            con.commit()
-    finally:
-        con.close()"""
-
 
 @app.route('/admin/editwhisky/<wid>', methods=['GET', 'POST'])
 def editWhiskuPage(wid):
@@ -166,11 +141,33 @@ def editWhiskuPage(wid):
         if value == "":
             return redirect('/admin/editwhisky/' + str(wid))
 
+        if field == "dont":
+            con = getConnection()
+            try:
+                with con.cursor() as cur:
+                    cur.execute("UPDATE whisky SET Active = False WHERE WhiskyID = %s;",(wid, ))
+                    cur.execute("DELETE FROM BasketProduct WHERE ProductNumber = %s;", (wid, ))
+                con.commit()
+            finally:
+                con.close()
+            return redirect('/admin/editwhisky/' + str(wid))
+
+        if field == "do":
+            con = getConnection()
+            try:
+                with con.cursor() as cur:
+                    cur.execute("UPDATE whisky SET Active = True WHERE WhiskyID = %s;",(wid, ))
+                con.commit()
+            finally:
+                con.close()
+            return redirect('/admin/editwhisky/' + str(wid))
+
+
         con = getConnection()
         try:
             with con.cursor() as cur:
                 cur.execute(("UPDATE whisky SET " + field + "=%s WHERE WhiskyID = %s;"),(value, wid))
-                con.commit()
+            con.commit()
         finally:
             con.close()
 
@@ -222,12 +219,12 @@ def addWhiskyPage():
             with con.cursor() as cur:
                 cur.execute("SET @id = IF(EXISTS(SELECT WhiskyID FROM whisky), ((SELECT MAX(WhiskyID) FROM whisky) + 1), 0);")
                 if form['Region'] != "":
-                    cur.execute("""INSERT INTO whisky(WhiskyID, WhiskyName, Price, StorageLeft, Nation, Distillery, Region, Alohol, Picture)
-                        VALUES (@id, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                    cur.execute("""INSERT INTO whisky(WhiskyID, WhiskyName, Price, StorageLeft, Nation, Distillery, Region, Alohol, Picture, Active)
+                        VALUES (@id, %s, %s, %s, %s, %s, %s, %s, %s, True)""",
                         (form['WhiskyName'], form['Price'], form['StorageLeft'], form['Nation'], form['Distillery'], form['Region'], form['Alohol'], '0'))
                 else:
-                    cur.execute("""INSERT INTO whisky(WhiskyID, WhiskyName, Price, StorageLeft, Nation, Distillery, Alohol, Picture)
-                        VALUES (@id, %s, %s, %s, %s, %s, %s, %s)""",
+                    cur.execute("""INSERT INTO whisky(WhiskyID, WhiskyName, Price, StorageLeft, Nation, Distillery, Alohol, Picture, Active)
+                        VALUES (@id, %s, %s, %s, %s, %s, %s, %s, True)""",
                         (form['WhiskyName'], form['Price'], form['StorageLeft'], form['Nation'], form['Distillery'], form['Alohol'], '0'))
             con.commit()
         finally:

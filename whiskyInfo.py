@@ -41,7 +41,7 @@ def whisky():
             whiskyprod = []
 
 
-            cur.execute('SELECT * FROM whisky')
+            cur.execute('SELECT * FROM whisky WHERE Active = True;')
 
             rows = cur.fetchall()
 
