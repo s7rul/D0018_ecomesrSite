@@ -199,13 +199,26 @@ def upload_image():
 
             image = request.files["image"]
 
+
             image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
 
-            print("Saved Image")
+            image.filename.split(".")[0]
+
+
+            con = getConnection()
+            try:
+                with con.cursor() as cur:
+                    cur.execute(("UPDATE whisky SET Picture=True WHERE WhiskyID = %s;"),(image.filename.split(".")[0],))
+                con.commit()
+            finally:
+                con.close()
+
 
             return redirect(request.url)
 
     return render_template("uploadImage.html")
+
+
 
 
 @app.route('/admin/addwhisky', methods=['GET', 'POST'])
