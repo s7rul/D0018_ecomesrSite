@@ -1,0 +1,35 @@
+{% extends 'adminLayOut.html' %}
+
+{% block body %}
+
+<div>
+	<h2> Edit Whisky </h2>
+</div>
+
+<div>
+	<form action="" method="post">
+		<label for="WhiskyName">Name<label>
+		<input type="text" name="WhiskyName" />
+
+		<label for="Price">Price<label>
+		<input type="number" name="Price" />
+
+		<label for="Nation">Nation<label>
+		<input type="text" name="Nation" />
+
+		<label for="Distillery">Distillery<label>
+		<input type="text" name="Distillery" />
+
+		<label for="Region">Region<label>
+		<input type="text" name="Region" />
+
+		<label for="Alohol">Alcohol<label>
+		<input type="text" name="Alohol" />
+
+		<label for="StorageLeft">Storage Left<label>
+		<input type="number" name="StorageLeft" />
+
+		<input type="submit" value="Add">
+	</form>
+</div>
+{% endblock %}
