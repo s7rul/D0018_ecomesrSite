@@ -188,9 +188,7 @@ def editWhiskuPage(wid):
 
     return render_template("editwhisky.html", whisky=whisky)
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
+
 
 
 @app.route("/admin/uploadImage", methods=["GET", "POST"])
@@ -212,8 +210,7 @@ def upload_image():
 
     return render_template("uploadImage.html")
 
-=======
->>>>>>> Stashed changes
+
 @app.route('/admin/addwhisky', methods=['GET', 'POST'])
 def addWhiskyPage():
     if request.method == 'POST':
@@ -232,7 +229,4 @@ def addWhiskyPage():
             con.close()
 
     return render_template("addWhisky.html")
-<<<<<<< Updated upstream
-=======
->>>>>>> 3f69fa0e86fa88cf1df3acf469e4dc6da59a85cd
->>>>>>> Stashed changes
+
