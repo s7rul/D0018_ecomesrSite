@@ -99,7 +99,7 @@ CREATE TABLE whiskymaster.grading
 (
 	GradingID		VARCHAR(15)		NOT Null,
     Grade			int				NOT Null,
-    ProductNumber	VARCHAR(15)		NOT NUll,
+    ProductNumber	int				NOT NUll,
     UserID			VARCHAR(15)		NOT NUll,
     
     PRIMARY KEY(GradingID),
@@ -114,7 +114,7 @@ CREATE TABLE whiskymaster.reservedProduct
 	ID				VARCHAR(15)		NOT Null,
     ReservedID		VARCHAR(15)		NOT Null,
     Quantity		int				NOT NUll,
-    ProductNumber	VARCHAR(15)		NOT NUll,
+    ProductNumber	int				NOT NUll,
     Price			int				NOT NULL,
     
     PRIMARY KEY(ID),
@@ -129,7 +129,7 @@ CREATE TABLE whiskymaster.comments
 	ID				VARCHAR(15)		NOT Null,
     comments		VARCHAR(511)	NOT Null,
 	UserID			VARCHAR(15)		NOT NUll,
-    ProductNumber	VARCHAR(15)		NOT NUll,
+    ProductNumber	int				NOT NUll,
     
     PRIMARY KEY(ID),
     FOREIGN KEY (UserID) REFERENCES whiskymaster.customers(CustomerID),
@@ -167,7 +167,7 @@ CREATE TABLE whiskymaster.BasketProduct
 	ID				int				NOT Null,
     Quantity		int				NOT Null,
 	BasketID		int				NOT NUll,
-    ProductNumber	VARCHAR(15)		NOT NUll,
+    ProductNumber	int				NOT NUll,
     
     PRIMARY KEY(ID),
     FOREIGN KEY (BasketID) REFERENCES whiskymaster.Basket(ID),
