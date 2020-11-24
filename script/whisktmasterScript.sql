@@ -19,7 +19,7 @@ CREATE TABLE whiskymaster.whisky
     Alohol		VARCHAR(10)		NOT NULL,
     Sold		int,
     
-    Picture 	BOOLEAN,
+    Picture 	BOOLEAN			NOT NULL,
     
     PRIMARY KEY(WhiskyID)
     );

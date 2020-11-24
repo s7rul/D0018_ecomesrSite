@@ -184,3 +184,22 @@ def editWhiskuPage(wid):
         con.close()
 
     return render_template("editwhisky.html", whisky=whisky)
+
+@app.route('/admin/addwhisky', methods=['GET', 'POST'])
+def addWhiskyPage():
+    if request.method == 'POST':
+        print(request.form)
+        form = request.form
+
+        con = getConnection()
+        try:
+            with con.cursor() as cur:
+                cur.execute("SET @id = IF(EXISTS(SELECT WhiskyID FROM whisky), ((SELECT MAX(WhiskyID) FROM whisky) + 1), 0);")
+                cur.execute("""INSERT INTO whisky(WhiskyID, WhiskyName, Price, StorageLeft, Nation, Distillery, Region, Alohol, Picture)
+                    VALUES (@id, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                    (form['WhiskyName'], form['Price'], form['StorageLeft'], form['Nation'], form['Distillery'], form['Region'], form['Alohol'], '0'))
+            con.commit()
+        finally:
+            con.close()
+
+    return render_template("addWhisky.html")
