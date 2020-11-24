@@ -5,5 +5,4 @@ app.config['WTF_CSRF_ENABLED'] = False
 
 
 
-
 import HelloFlask.views

@@ -4,8 +4,11 @@ from flask import render_template, request, redirect, make_response
 from HelloFlask import app
 import pymysql
 import pymysql.cursors
+import os
 from HelloFlask.forms.LoginForm import LoginForm
 from HelloFlask.sqlConnection import getConnection
+
+app.config["IMAGE_UPLOADS"] = "HelloFlask/static"
 
 
 
@@ -185,6 +188,29 @@ def editWhiskuPage(wid):
 
     return render_template("editwhisky.html", whisky=whisky)
 
+
+
+
+@app.route("/admin/uploadImage", methods=["GET", "POST"])
+def upload_image():
+
+    print(os.getcwd())
+
+    if request.method == "POST":
+
+        if request.files:
+
+            image = request.files["image"]
+
+            image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
+
+            print("Saved Image")
+
+            return redirect(request.url)
+
+    return render_template("uploadImage.html")
+
+
 @app.route('/admin/addwhisky', methods=['GET', 'POST'])
 def addWhiskyPage():
     if request.method == 'POST':
@@ -208,3 +234,4 @@ def addWhiskyPage():
             con.close()
 
     return render_template("addWhisky.html")
+
