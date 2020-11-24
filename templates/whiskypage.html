@@ -9,7 +9,11 @@
 	<p> Test test test </p>
 
 	<p>
+		{% if message['Picture'] %}
 		<img class="center" src="/static/{{message['WhiskyID']}}.jpg" width="500em">
+		{% else %}
+		<img class="center" src="/static/placeHolder.jpg" width="500em">
+		{% endif %}
 	</p>
 </div>
 <div>

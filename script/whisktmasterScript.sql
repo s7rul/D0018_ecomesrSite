@@ -19,35 +19,38 @@ CREATE TABLE whiskymaster.whisky
     Alohol		VARCHAR(10)		NOT NULL,
     Sold		int,
     
-    #Placeholder
-    Picture 	VARCHAR(255),
+    Picture 	BOOLEAN,
     
     PRIMARY KEY(WhiskyID)
     );
     
 INSERT INTO whiskymaster.whisky(WhiskyID, WhiskyName, Price, StorageLeft,
-Nation, Distillery, Alohol, Region)
-VALUES('1','Nikka Tailord', 1100, 5, 'Japan', 'Nikka', '43.0%', 'Test');
+Nation, Distillery, Alohol, Picture)
+VALUES('1','Nikka Tailord', 1100, 5, 'Japan', 'Nikka', '43.0%', True);
 
 INSERT INTO whiskymaster.whisky(WhiskyID, WhiskyName, Price, StorageLeft,
-Nation, Distillery, Alohol)
-VALUES('2','Caol Ila The Maltman 6 Years', 900, 10, 'Scotland', 'Caol Ila', '51.6%');
+Nation, Distillery, Alohol, Picture)
+VALUES('2','Caol Ila The Maltman 6 Years', 900, 10, 'Scotland', 'Caol Ila', '51.6%', True);
 
 INSERT INTO whiskymaster.whisky(WhiskyID, WhiskyName, Price, StorageLeft,
-Nation, Distillery, Alohol)
-VALUES('3','Penderyn Oloroso Sherry Finish', 800, 5, 'Scotland', 'Penderyn', '59.2%');
+Nation, Distillery, Alohol, Picture)
+VALUES('3','Penderyn Oloroso Sherry Finish', 800, 5, 'Scotland', 'Penderyn', '59.2%', True);
 
 INSERT INTO whiskymaster.whisky(WhiskyID, WhiskyName, Price, StorageLeft,
-Nation, Distillery, Alohol)
-VALUES('4','Hibiki Japanese Harmony', 750, 5, 'Japan', 'Suntory Whisky', '43%');
+Nation, Distillery, Alohol, Picture)
+VALUES('4','Hibiki Japanese Harmony', 750, 5, 'Japan', 'Suntory Whisky', '43%', True);
 
 INSERT INTO whiskymaster.whisky(WhiskyID, WhiskyName, Price, StorageLeft,
-Nation, Distillery, Alohol)
-VALUES('5','Bunnahabhain 18', 1300, 3, 'Scotland', 'Bunnahabhain', '46.3%');
+Nation, Distillery, Alohol, Picture)
+VALUES('5','Bunnahabhain 18', 1300, 3, 'Scotland', 'Bunnahabhain', '46.3%', True);
 
 INSERT INTO whiskymaster.whisky(WhiskyID, WhiskyName, Price, StorageLeft,
-Nation, Distillery, Alohol)
-VALUES('6','Glenfiddich 21 Reserva Rum Cask Finish', 1400, 2, 'Scotland', 'Glenfiddich', '43.2%');
+Nation, Distillery, Alohol, Picture)
+VALUES('6','Glenfiddich 21 Reserva Rum Cask Finish', 1400, 2, 'Scotland', 'Glenfiddich', '43.2%', True);
+
+INSERT INTO whiskymaster.whisky(WhiskyID, WhiskyName, Price, StorageLeft,
+Nation, Distillery, Alohol, Picture)
+VALUES('7','Lagavulin 16 Years', 450, 20, 'Scotland', 'Lagavulin', '43%', False);
 
 CREATE TABLE whiskymaster.customers
 (
