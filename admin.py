@@ -202,7 +202,13 @@ def upload_image():
 
             image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
 
-            image.filename.split(".")[0]
+
+            #Check if the name was a number.
+            try:
+                int(image.filename.split(".")[0])
+
+            except:
+                return redirect(request.url)
 
 
             con = getConnection()
