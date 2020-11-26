@@ -132,6 +132,9 @@ def basketPage():
 
     userID = request.cookies.get('userID')
 
+    if userID==None:
+        return redirect("/login")
+
     if request.method == 'POST':
         print(request.form)
         modID = (next(iter(request.form)))
@@ -162,8 +165,6 @@ def basketPage():
         return redirect('/basket')
 
 
-    if userID==None:
-        return redirect("/login")
 
     #The connection the the server.
     con = getConnection()
