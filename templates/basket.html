@@ -7,8 +7,8 @@
 <div>
 
 	<h2>Whisky Master</h2>
-	<p>Your Basket it here</p>
 
+	{%if basket|count != 0%}
 	<table class="center">
 
 		<tr>
@@ -35,6 +35,9 @@
 		<th colspan="2"> Total Price </th>
 		<th colspan="2"> {{price}} kr </th>
 	</table>
+	{%else%}
+	<p>You have an empty basket.</p>
+	{%endif%}
 
 
 </div>
