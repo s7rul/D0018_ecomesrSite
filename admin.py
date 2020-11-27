@@ -84,7 +84,7 @@ def admin():
     adminID = request.cookies.get('adminID')
 
     if adminID == None:
-        return redirect('/admin/login')
+        return redirect('/admin/login', 303)
 
     if request.method == 'POST':
         modID = (next(iter(request.form)))
