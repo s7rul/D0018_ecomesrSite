@@ -201,3 +201,8 @@ def basketPage():
     title = "Whisky Master",
     basket = row,
     price = price)
+
+@app.route('/register', methods=['GET', 'POST'])
+def registerUser():
+
+    return render_template("register.html")
