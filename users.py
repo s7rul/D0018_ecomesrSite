@@ -160,7 +160,7 @@ def basketPage():
             finally:
                 con.close()
 
-            purchaseBasket(userID, basketID):
+            purchaseBasket(userID, basketID)
                 
             
 
