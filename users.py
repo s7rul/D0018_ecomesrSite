@@ -234,6 +234,7 @@ def registerUser():
                     con.commit()
 
                 else:
+                    con.close()
                     return "Username or Mail is taken"
 
 
