@@ -135,6 +135,7 @@ def userPageURL(userID):
 
 @app.route('/basket', methods=['GET', 'POST'])
 def basketPage():
+    error = 'no'
 
     userID = request.cookies.get('userID')
 
@@ -160,7 +161,8 @@ def basketPage():
             finally:
                 con.close()
 
-            purchaseBasket(userID, basketID)
+            if not purchaseBasket(userID, basketID):
+                error = 'no purshese'
                 
             
 
@@ -225,7 +227,8 @@ def basketPage():
     "basket.html",
     title = "Whisky Master",
     basket = row,
-    price = price)
+    price = price,
+    error = error)
 
 @app.route('/register', methods=['GET', 'POST'])
 def registerUser():
