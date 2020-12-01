@@ -24,6 +24,36 @@ def createBasket(userID):
 
         con.close()
 
+def purchaseBasket(userID, basketID):
+    con = getConnection()
+
+    try:
+        with con.cursor() as cur:
+            cur.execute("SET @reservedId = IF(EXISTS(SELECT ReservedID FROM reserved), ((SELECT MAX(ReservedID) FROM reserved) + 1), 0);")
+            cur.execute("SET @userId = %s;", (userID,))
+            cur.execute("""INSERT INTO
+                    reserved( ReservedID, CustomerID, ReserverDate, ReservedStatus, Mail, PNumber, City, Adress, ZipCode)
+                    VALUES (@reservedId, %s, %s, %s,
+                    (SELECT Mail FROM customers WHERE CustomerID = @userId),
+                    (SELECT PNumber FROM customers WHERE CustomerID = @userId),
+                    (SELECT City FROM customers WHERE CustomerID = @userId),
+                    (SELECT Address FROM customers WHERE CustomerID = @userId),
+                    (SELECT ZipCode FROM customers WHERE CustomerID = @userId));""",
+                    (userID,"200101", "ordered"))
+            cur.execute("SELECT * FROM BasketProduct WHERE BasketID = %s", (basketID,))
+            products = cur.fetchall()
+            for row in products:
+                cur.execute("SET @rpId = IF(EXISTS(SELECT ID FROM reservedProduct), ((SELECT MAX(ID) FROM reservedProduct) + 1), 0);")
+                cur.execute("SET @price = (SELECT Price FROM whisky WHERE WhiskyID = %s);", (row['ProductNumber'], ))
+                cur.execute("INSERT INTO reservedProduct(ID, ReservedID, Quantity, ProductNumber, Price)VALUES (@rpID, @reservedId, %s, %s, @price);",
+                        (row['Quantity'],
+                        row['ProductNumber']))
+                cur.execute("DELETE FROM BasketProduct WHERE BasketID = %s;", (basketID,))
+
+        con.commit()
+
+    finally:
+        con.close()
 
 
 def addToBasket(whiskyID, count):
@@ -43,7 +73,7 @@ def addToBasket(whiskyID, count):
             cur.execute("SELECT ProductNumber FROM BasketProduct WHERE ProductNumber = %s AND BasketID = @basketid;", (whiskyID,))
             if cur.fetchone() == None:
                 cur.execute("SET @id = IF(EXISTS(SELECT ID FROM BasketProduct), ((SELECT MAX(ID) FROM BasketProduct) + 1), 0);")
-                cur.execute("INSERT INTO BasketProduct( ID, Quantity, BasketID, ProductNumber) VALUES (@id, %s, @basketid, %s)", (count, whiskyID))
+                cur.execute("INSERT INTO BasketProduct( ID, Quantity, BasketID, ProductNumber) VALUES (@id, %s, @basketid, %s);", (count, whiskyID))
             else:
                 cur.execute("UPDATE BasketProduct SET Quantity=(Quantity + %s) WHERE ProductNumber = %s AND BasketID = @basketid;", (count, whiskyID))
         con.commit()

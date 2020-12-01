@@ -5,6 +5,7 @@ import pymysql
 import pymysql.cursors
 from HelloFlask.forms.LoginForm import LoginForm
 from HelloFlask.sqlConnection import getConnection
+from HelloFlask.purshese import purchaseBasket
 
 def getUsername():
     userID = request.cookies.get('userID')
@@ -141,33 +142,55 @@ def basketPage():
         return redirect("/login")
 
     if request.method == 'POST':
-        print(request.form)
-        modID = (next(iter(request.form)))
-        qvant = request.form[modID]
-        print("ID " + modID + "\nQ: " + qvant)
-        if qvant == '' or int(qvant) < 0:
-            return redirect('/basket')
+        print("form: "+ str(request.form))
+        field = (next(iter(request.form)))
+        
+        #buy basket
+        if field == "buy":
+            con = getConnection()
+            basketID = None
 
-        con = getConnection()
-
-        if qvant == '0':
             try:
                 with con.cursor() as cur:
-                    cur.execute("DELETE FROM BasketProduct WHERE ID = %s;", (modID, ))
+                    cur.execute("SELECT ID from Basket WHERE CustomerID = %s;", (userID,))
+                    basketID = cur.fetchone()['ID']
+                    print("basketID: " + str(basketID))
                 con.commit()
 
             finally:
                 con.close()
+
+            purchaseBasket(userID, basketID)
+            
+
+        #update basket
         else:
-            try:
-                with con.cursor() as cur:
-                    cur.execute("UPDATE BasketProduct SET Quantity=%s WHERE ID = %s;", (qvant, modID))
-                con.commit()
+            print(request.form)
+            qvant = request.form[field]
+            print("ID " + field + "\nQ: " + qvant)
+            if qvant == '' or int(qvant) < 0:
+                return redirect('/basket')
 
-            finally:
-                con.close()
+            con = getConnection()
 
-        return redirect('/basket')
+            if qvant == '0':
+                try:
+                    with con.cursor() as cur:
+                        cur.execute("DELETE FROM BasketProduct WHERE ID = %s;", (field, ))
+                    con.commit()
+
+                finally:
+                    con.close()
+            else:
+                try:
+                    with con.cursor() as cur:
+                        cur.execute("UPDATE BasketProduct SET Quantity=%s WHERE ID = %s;", (qvant, field))
+                    con.commit()
+
+                finally:
+                    con.close()
+
+            return redirect('/basket')
 
 
 

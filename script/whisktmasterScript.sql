@@ -78,7 +78,7 @@ VALUES(1, 'Margo and sons', 'Margo', 'pas', 'margo@margoasons.com', '1231234', '
     
 CREATE TABLE whiskymaster.reserved
 (
-	ReservedID		VARCHAR(15)		NOT Null,
+	ReservedID		int				NOT Null,
     CustomerID		int,
     ReserverDate	VARCHAR(255),
     ReservedStatus	VARCHAR(255),
@@ -101,7 +101,7 @@ CREATE TABLE whiskymaster.grading
 	GradingID		VARCHAR(15)		NOT Null,
     Grade			int				NOT Null,
     ProductNumber	int				NOT NUll,
-    UserID			int		NOT NUll,
+    UserID			int				NOT NUll,
     
     PRIMARY KEY(GradingID),
     FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.whisky(WhiskyID),
@@ -112,8 +112,8 @@ CREATE TABLE whiskymaster.grading
     
 CREATE TABLE whiskymaster.reservedProduct
 (
-	ID				VARCHAR(15)		NOT Null,
-    ReservedID		VARCHAR(15)		NOT Null,
+	ID				int				NOT Null,
+    ReservedID		int				NOT Null,
     Quantity		int				NOT NUll,
     ProductNumber	int				NOT NUll,
     Price			int				NOT NULL,
