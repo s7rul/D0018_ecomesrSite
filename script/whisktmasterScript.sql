@@ -79,7 +79,7 @@ VALUES(1, 'Margo and sons', 'Margo', 'pas', 'margo@margoasons.com', '1231234', '
     
 CREATE TABLE whiskymaster.reserved
 (
-	ReservedID		int				NOT Null,
+	ReservedID		VARCHAR(15)		NOT Null,
     CustomerID		int,
     ReserverDate	VARCHAR(255),
     ReservedStatus	VARCHAR(255),
@@ -102,7 +102,7 @@ CREATE TABLE whiskymaster.grading
 	GradingID		VARCHAR(15)		NOT Null,
     Grade			int				NOT Null,
     ProductNumber	int				NOT NUll,
-    UserID			int				NOT NUll,
+    UserID			int		NOT NUll,
     
     PRIMARY KEY(GradingID),
     FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.whisky(WhiskyID),
@@ -113,8 +113,8 @@ CREATE TABLE whiskymaster.grading
     
 CREATE TABLE whiskymaster.reservedProduct
 (
-	ID				int				NOT Null,
-    ReservedID		int				NOT Null,
+	ID				VARCHAR(15)		NOT Null,
+    ReservedID		VARCHAR(15)		NOT Null,
     Quantity		int				NOT NUll,
     ProductNumber	int				NOT NUll,
     Price			int				NOT NULL,
@@ -128,16 +128,22 @@ CREATE TABLE whiskymaster.reservedProduct
 
 CREATE TABLE whiskymaster.comments
 (
-	ID				VARCHAR(15)		NOT Null,
-    comments		VARCHAR(511)	NOT Null,
+	ID				int				NOT Null,
+    UserName		VARCHAR(255)	NOT Null,		
+    Comments		VARCHAR(511)	NOT Null,
 	UserID			int				NOT NUll,
-    ProductNumber	int				NOT NUll,
+    ProductNumber	int				NOT Null,
     
     PRIMARY KEY(ID),
     FOREIGN KEY (UserID) REFERENCES whiskymaster.customers(CustomerID),
-    FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.whisky(WhiskyID)
+    FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.whisky(WhiskyID),
+    FOREIGN KEY (UserName) REFERENCES whiskymaster.customers(UserName)
     
 	);
+    
+INSERT INTO whiskymaster.comments(ID, UserName, Comments, UserID, ProductNumber)
+VALUES(0, (SELECT UserName FROM whiskymaster.customers Where UserName='Cust0'), "Jag Tycker om den", (SELECT CustomerID FROM whiskymaster.customers Where CustomerID=0), (SELECT WhiskyID FROM whiskymaster.whisky Where WhiskyID=1));
+
 
 CREATE TABLE whiskymaster.admins
 (
