@@ -64,11 +64,15 @@ def whisky():
 def whiskypage(whiskyID):
     form = AddForm(request.form)
     if (request.method == 'POST'):
+
+#        print(print(request.form))
+
         try:
             count = int(form.addNumber.data)
         except:
             return "Wrong input"
 
+        print("Right Before")
         if addToBasket(whiskyID, count):
             return redirect('/whisky/' + whiskyID)
         else:
@@ -84,9 +88,10 @@ def whiskypage(whiskyID):
             with con.cursor() as cur:
 
                 cur.execute("SELECT * FROM whisky WHERE WhiskyID=%s;", (str(whiskyID),))
-
-
                 row = cur.fetchone()
+
+                cur.execute("SELECT * FROM comments WHERE ProductNumber=%s;", (str(whiskyID),))
+                comments = cur.fetchall()
 
 
         finally:
@@ -97,6 +102,6 @@ def whiskypage(whiskyID):
         "whiskypage.html",
         title = "Whisky Master",
         message = row,
-        form=form)
-
+        form=form,
+        comments = comments)
 

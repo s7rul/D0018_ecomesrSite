@@ -68,8 +68,37 @@
 		Sorry We are out of stock right now.
 	</div>
 	{% endif %}
+</p>
+
+<p>
+
+	<div>
+		<table class="center">
+			<tr>
+				<th>Username</th>
+				<th>Comment </th>
+
+			</tr>
+			{% for item in comments %}
+			<!--Jinja Loop starts at 1 and not zero-->
+
+			<tr>
+				<th> {{item['UserName']}}</th>
+				<th> {{item['Comments']}} </th>
+
+			</tr>
+
+
+			{% endfor %}
+		</table>
+	</div>
 
 </p>
 
+<div>
 
-{% endblock %}
+
+
+</div>
+
+	{% endblock %}
