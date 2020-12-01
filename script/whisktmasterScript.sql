@@ -66,6 +66,7 @@ CREATE TABLE whiskymaster.customers
     ZipCode		VARCHAR(255)	NOT Null,
     
     unique KEY (UserName),
+    unique KEY (Mail),
     PRIMARY KEY(CustomerID)
     
 	);

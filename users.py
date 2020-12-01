@@ -218,7 +218,27 @@ def registerUser():
 
         try:
             with con.cursor() as cur:
-                cur.execute("SET @id = IF(EXISTS(SELECT CustomerID FROM customers), ((SELECT MAX(CustomerID) FROM customers) + 1), 0);")
+
+                cur.execute("SELECT * FROM customers WHERE UserName=%s OR Mail=%s;", (form['UserName'], form['Mail']))
+                rows = cur.fetchone()
+
+
+                if rows == None:
+                    cur.execute("SET @id = IF(EXISTS(SELECT CustomerID FROM customers), ((SELECT MAX(CustomerID) FROM customers) + 1), 0);")
+
+                    cur.execute("""INSERT INTO customers(CustomerID, CorpName, UserName, PassW, Mail, PNumber, City, Address, ZipCode)
+                        VALUES (@id, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                        (form['CorpName'], form['UserName'], form['PassW'], form['Mail'], form['PNumber'], form['City'], form['Address'], 'ZipCode'))
+                    print("insert")
+                        
+                    con.commit()
+
+                else:
+                    return "Username or Mail is taken"
+
+
+
+                
 
 
         finally:
