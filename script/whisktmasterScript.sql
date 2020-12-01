@@ -55,31 +55,31 @@ VALUES('7','Lagavulin 16 Years', 450, 20, 'Scotland', 'Lagavulin', '43%', False,
 
 CREATE TABLE whiskymaster.customers
 (
-	CustomerID	VARCHAR(15)		NOT Null,
-    CorpName	VARCHAR(255),
+	CustomerID	int				NOT Null,
+    CorpName	VARCHAR(255)	NOT Null,
     UserName	VARCHAR(255)	NOT Null,
     PassW		VARCHAR(255)	NOT Null,	
-    Mail		VARCHAR(255),
-    PNumber		VARCHAR(255),
-    City		VARCHAR(255),
-    Address		VARCHAR(255),
-    ZipCode		VARCHAR(255),
+    Mail		VARCHAR(255)	NOT Null,
+    PNumber		VARCHAR(255)	NOT	Null,
+    City		VARCHAR(255)	NOT Null,
+    Address		VARCHAR(255)	NOT Null,
+    ZipCode		VARCHAR(255)	NOT Null,
     
     unique KEY (UserName),
     PRIMARY KEY(CustomerID)
     
 	);
     
-INSERT INTO whiskymaster.customers(CustomerID, UserName, PassW)
-VALUES('0', 'cust0', 'root');
 INSERT INTO whiskymaster.customers(CustomerID, CorpName, UserName, PassW, Mail, PNumber, City, Address, ZipCode)
-VALUES('1', 'Margo and sons', 'Margo', 'pas', 'margo@margoasons.com', '1231234', 'Margonia', 'mstraze 23','23456');
+VALUES(0, 'Evil', 'cust0', 'root', 'hejo@test.com', '007', 'Cool Town', 'Nowhere street 7', '78563255');
+INSERT INTO whiskymaster.customers(CustomerID, CorpName, UserName, PassW, Mail, PNumber, City, Address, ZipCode)
+VALUES(1, 'Margo and sons', 'Margo', 'pas', 'margo@margoasons.com', '1231234', 'Margonia', 'mstraze 23','23456');
     
     
 CREATE TABLE whiskymaster.reserved
 (
 	ReservedID		VARCHAR(15)		NOT Null,
-    CustomerID		VARCHAR(255),
+    CustomerID		int,
     ReserverDate	VARCHAR(255),
     ReservedStatus	VARCHAR(255),
     Mail			VARCHAR(255),
@@ -101,7 +101,7 @@ CREATE TABLE whiskymaster.grading
 	GradingID		VARCHAR(15)		NOT Null,
     Grade			int				NOT Null,
     ProductNumber	int				NOT NUll,
-    UserID			VARCHAR(15)		NOT NUll,
+    UserID			int		NOT NUll,
     
     PRIMARY KEY(GradingID),
     FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.whisky(WhiskyID),
@@ -129,7 +129,7 @@ CREATE TABLE whiskymaster.comments
 (
 	ID				VARCHAR(15)		NOT Null,
     comments		VARCHAR(511)	NOT Null,
-	UserID			VARCHAR(15)		NOT NUll,
+	UserID			int				NOT NUll,
     ProductNumber	int				NOT NUll,
     
     PRIMARY KEY(ID),
@@ -156,7 +156,7 @@ VALUES('0', 'admin', 'admin', 'adminsson');
 CREATE TABLE whiskymaster.Basket
 (
 	ID			int				NOT Null,
-    CustomerID	VARCHAR(15)		NOT NUll,
+    CustomerID	int				NOT NUll,
     
     PRIMARY KEY(ID),
     FOREIGN KEY (CustomerID) REFERENCES whiskymaster.customers(CustomerID)

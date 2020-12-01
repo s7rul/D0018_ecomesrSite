@@ -67,6 +67,8 @@ def userPageLogin(ID):
     #The connection the the server.
     con = getConnection()
 
+    print(ID)
+
     # Try to connect to the server and find all values for
     # whisky tabel.
     try:
@@ -81,11 +83,14 @@ def userPageLogin(ID):
 
         con.close()
 
+    
+
     ret = make_response(render_template(
     "userPage.html",
     title = "Whisky Master",
     customer = row))
-    #set the cookie
+    #set the cookie Can only handel Strings.
+    ID = str(ID)
     ret.set_cookie('userID', ID)
     return ret
 
@@ -204,5 +209,19 @@ def basketPage():
 
 @app.route('/register', methods=['GET', 'POST'])
 def registerUser():
+
+    if request.method == 'POST':
+        print(request.form)
+        form = request.form
+
+        con = getConnection()
+
+        try:
+            with con.cursor() as cur:
+                cur.execute("SET @id = IF(EXISTS(SELECT CustomerID FROM customers), ((SELECT MAX(CustomerID) FROM customers) + 1), 0);")
+
+
+        finally:
+            con.close()
 
     return render_template("register.html")
