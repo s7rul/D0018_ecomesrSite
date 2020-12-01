@@ -160,7 +160,8 @@ def basketPage():
             finally:
                 con.close()
 
-            purchaseBasket(userID, basketID)
+            purchaseBasket(userID, basketID):
+                
             
 
         #update basket
@@ -204,14 +205,10 @@ def basketPage():
 
 
         with con.cursor() as cur:
-
-            cur.execute(" create temporary table basketTmp(SELECT * FROM BasketProduct WHERE BasketID IN (SELECT ID FROM Basket WHERE CustomerID=%s));", (userID,))
-            cur.execute("select * from whisky inner join basketTmp on whisky.WhiskyID=basketTmp.ProductNumber;")
-
+            cur.execute("SELECT * FROM (whisky INNER JOIN BasketProduct on whisky.WhiskyID=BasketProduct.ProductNumber) WHERE BasketID = (SELECT ID FROM Basket WHERE CustomerID=%s);", (userID,))
             row = cur.fetchall()
 
-            cur.execute("create temporary table basketPrice(SELECT * FROM whisky inner join basketTmp on  whisky.WhiskyID=basketTmp.ProductNumber);")
-            cur.execute("SELECT SUM(Price * Quantity) FROM basketPrice;")
+            cur.execute("SELECT SUM(Price * Quantity) FROM (whisky INNER JOIN BasketProduct on whisky.WhiskyID=BasketProduct.ProductNumber) WHERE BasketID = (SELECT ID FROM Basket WHERE CustomerID=%s);", (userID,))
 
             price = cur.fetchone()
             price = price['SUM(Price * Quantity)']

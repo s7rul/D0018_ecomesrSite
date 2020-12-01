@@ -40,20 +40,27 @@ def purchaseBasket(userID, basketID):
                     (SELECT Address FROM customers WHERE CustomerID = @userId),
                     (SELECT ZipCode FROM customers WHERE CustomerID = @userId));""",
                     (userID,"200101", "ordered"))
-            cur.execute("SELECT * FROM BasketProduct WHERE BasketID = %s", (basketID,))
+            cur.execute("SELECT Price, StorageLeft, Quantity, ProductNumber FROM (whisky INNER JOIN BasketProduct ON WhiskyID = ProductNumber) WHERE BasketID = %s;", (basketID,))
             products = cur.fetchall()
             for row in products:
                 cur.execute("SET @rpId = IF(EXISTS(SELECT ID FROM reservedProduct), ((SELECT MAX(ID) FROM reservedProduct) + 1), 0);")
-                cur.execute("SET @price = (SELECT Price FROM whisky WHERE WhiskyID = %s);", (row['ProductNumber'], ))
-                cur.execute("INSERT INTO reservedProduct(ID, ReservedID, Quantity, ProductNumber, Price)VALUES (@rpID, @reservedId, %s, %s, @price);",
+
+                if int(row['StorageLeft']) < int(row['Quantity']):
+                    con.rollback()
+                    return False
+
+                cur.execute("INSERT INTO reservedProduct(ID, ReservedID, Quantity, ProductNumber, Price)VALUES (@rpID, @reservedId, %s, %s, %s);",
                         (row['Quantity'],
-                        row['ProductNumber']))
+                        row['ProductNumber'],
+                        row['Price']))
                 cur.execute("DELETE FROM BasketProduct WHERE BasketID = %s;", (basketID,))
 
         con.commit()
 
     finally:
         con.close()
+
+    return True
 
 
 def addToBasket(whiskyID, count):
