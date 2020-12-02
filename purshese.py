@@ -53,6 +53,7 @@ def purchaseBasket(userID, basketID):
                         (row['Quantity'],
                         row['ProductNumber'],
                         row['Price']))
+                cur.execute("UPDATE whisky SET StorageLeft=(StorageLeft - %s) WHERE WhiskyID = %s;", (row['Quantity'], row['ProductNumber']))
                 cur.execute("DELETE FROM BasketProduct WHERE BasketID = %s;", (basketID,))
 
         con.commit()
