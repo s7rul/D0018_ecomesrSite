@@ -7,6 +7,7 @@ from HelloFlask.forms.LoginForm import LoginForm
 from HelloFlask.forms.AddForm import AddForm
 from HelloFlask.sqlConnection import getConnection
 from HelloFlask.purshese import addToBasket
+from HelloFlask.users import addComment
 
 @app.route('/')
 @app.route('/home')
@@ -65,18 +66,34 @@ def whiskypage(whiskyID):
     form = AddForm(request.form)
     if (request.method == 'POST'):
 
-#        print(print(request.form))
+        print(print(request.form))
+
+        comments = request.form
+
 
         try:
-            count = int(form.addNumber.data)
+            #End up here if comments.
+            if form.addNumber.data == "" and comments['Comments'] != "":
+
+
+                if addComment(whiskyID, comments['Comments']):
+                    return redirect('/whisky/' + whiskyID)
+                else:
+                    return redirect('/login')
+
+            #End up here if Buy
+            else:
+                count = int(form.addNumber.data)
+
+                if addToBasket(whiskyID, count):
+                    return redirect('/whisky/' + whiskyID)
+                else:
+                    return redirect('/login')
+
         except:
             return "Wrong input"
 
-        print("Right Before")
-        if addToBasket(whiskyID, count):
-            return redirect('/whisky/' + whiskyID)
-        else:
-            return redirect('/login')
+
     else:
         #The connection the the server.
         con = getConnection()

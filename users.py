@@ -245,7 +245,7 @@ def registerUser():
                 cur.execute("SELECT * FROM customers WHERE UserName=%s OR Mail=%s;", (form['UserName'], form['Mail']))
                 rows = cur.fetchone()
 
-
+                
                 if rows == None:
                     cur.execute("SET @id = IF(EXISTS(SELECT CustomerID FROM customers), ((SELECT MAX(CustomerID) FROM customers) + 1), 0);")
 
@@ -269,3 +269,27 @@ def registerUser():
             con.close()
 
     return render_template("register.html")
+
+
+def addComment(whiskyID, comment):
+
+    userID = request.cookies.get('userID')
+
+    if userID == None:
+        return False
+
+    con = getConnection()
+
+    try:
+        with con.cursor() as cur:
+            cur.execute("SET @id = IF(EXISTS(SELECT ID FROM comments), ((SELECT MAX(ID) FROM comments) + 1), 0);")
+            cur.execute("SET @username = (SELECT UserName from customers WHERE CustomerID = %s);", (userID,))
+            cur.execute("INSERT INTO comments( ID, UserName, Comments, UserID, Productnumber) VALUES (@id, @username, %s, %s, %s);", (comment, userID, whiskyID))
+
+            con.commit()
+
+    finally:
+        con.close()
+
+
+    return True
