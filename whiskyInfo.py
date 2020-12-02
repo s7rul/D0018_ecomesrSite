@@ -65,18 +65,29 @@ def whiskypage(whiskyID):
     form = AddForm(request.form)
     if (request.method == 'POST'):
 
-#        print(print(request.form))
+        print(print(request.form))
+
+        comments = request.form
+
 
         try:
-            count = int(form.addNumber.data)
+
+            if form.addNumber.data == "" and comments['Comments'] != "":
+                print("Comment")
+                return redirect('/whisky/' + whiskyID)
+            else:
+                print("Buy")
+                count = int(form.addNumber.data)
+
+                if addToBasket(whiskyID, count):
+                    return redirect('/whisky/' + whiskyID)
+                else:
+                    return redirect('/login')
+
         except:
             return "Wrong input"
 
-        print("Right Before")
-        if addToBasket(whiskyID, count):
-            return redirect('/whisky/' + whiskyID)
-        else:
-            return redirect('/login')
+
     else:
         #The connection the the server.
         con = getConnection()
