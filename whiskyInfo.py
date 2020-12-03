@@ -7,7 +7,7 @@ from HelloFlask.forms.LoginForm import LoginForm
 from HelloFlask.forms.AddForm import AddForm
 from HelloFlask.sqlConnection import getConnection
 from HelloFlask.purshese import addToBasket
-from HelloFlask.users import addComment
+from HelloFlask.users import addComment, rateWhisky
 
 @app.route('/')
 @app.route('/home')
@@ -61,6 +61,7 @@ def whisky():
     message = whiskyprod,
     whiskyID = whiskyNumber)
 
+
 @app.route('/whisky/<whiskyID>', methods=['GET', 'POST'])
 def whiskypage(whiskyID):
     #form = AddForm(request.form)
@@ -96,7 +97,10 @@ def whiskypage(whiskyID):
             else:
                 return redirect('/login')
         elif field == 'rate':
-            return 'rate'
+            if rateWhisky(whiskyID, comments['rate']):
+                return redirect('/whisky/' + whiskyID)
+            else:
+                return redirect('/login')
         else:
             return 'wrong!!!!!'
 
@@ -118,6 +122,9 @@ def whiskypage(whiskyID):
                 cur.execute("SELECT * FROM comments WHERE ProductNumber=%s;", (str(whiskyID),))
                 comments = cur.fetchall()
 
+                cur.execute("SELECT AVG(Grade) FROM grading WHERE ProductNumber = %s;", (whiskyID,))
+                grade = cur.fetchone()
+
 
         finally:
 
@@ -127,5 +134,6 @@ def whiskypage(whiskyID):
         "whiskypage.html",
         title = "Whisky Master",
         message = row,
-        comments = comments)
+        comments = comments,
+        grade = grade)
 

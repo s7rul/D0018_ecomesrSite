@@ -294,6 +294,37 @@ def addComment(whiskyID, comment):
 
     return True
 
+def rateWhisky(whiskyID, grade):
+    userID = request.cookies.get('userID')
+
+    if userID == None:
+        return False
+
+    con = getConnection()
+
+    try:
+        with con.cursor() as cur:
+
+            cur.execute("SELECT GradingID FROM grading WHERE UserID = %s AND ProductNumber = %s;", (userID, whiskyID))
+            if cur.fetchone() == None:
+                cur.execute("SET @id = IF(EXISTS(SELECT GradingID FROM grading), ((SELECT MAX(GradingID) FROM grading) + 1), 0);")
+                cur.execute("INSERT INTO grading( GradingID, Grade, ProductNumber, UserID) VALUES (@id, %s, %s, %s);", (grade, whiskyID, userID))
+            else:
+                cur.execute("UPDATE grading SET Grade = %s WHERE ProductNumber = %s AND UserID = %s;", (grade, whiskyID, userID))
+
+            con.commit()
+
+    finally:
+        con.close()
+
+
+    return True
+
+
+
+
+
+
 @app.route('/oders')
 def oders():
 
