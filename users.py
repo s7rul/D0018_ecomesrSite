@@ -325,8 +325,41 @@ def oders():
 
 
 @app.route('/oders/<ReservedID>')
-def oder(whiskyID):
+def oder(ReservedID):
+
+
+    userID = request.cookies.get('userID')
+
+    if userID == None:
+        return redirect('/login')
+
+    #The connection the the server.
+    con = getConnection()
+    # Try to connect to the server and find all values for
+    # whisky tabel.
+
+    try:
+
+
+        with con.cursor() as cur:
+            cur.execute("SELECT whisky.WhiskyID, whisky.WhiskyName, reservedProduct.Price, reservedProduct.Quantity FROM (whisky INNER JOIN reservedProduct on whisky.WhiskyID=reservedProduct.ProductNumber) WHERE ReservedID = %s;", (ReservedID,))
+            rows = cur.fetchall()
+
+            cur.execute("SELECT SUM(Price * Quantity) FROM reservedProduct WHERE ReservedID = %s;", (ReservedID,))
+
+            price = cur.fetchone()
+            price = price['SUM(Price * Quantity)']
 
 
 
-    return render_template("oder.html")
+    finally:
+
+        con.close()
+
+    print(rows)
+
+
+
+    return render_template("oder.html",
+                           whisky = rows,
+                           price = price)

@@ -7,8 +7,6 @@
 <div>
 
     <h2>Whisky Master</h2>
-
-    {%if basket|count != 0%}
     <table class="center">
 
         <tr>
@@ -19,7 +17,7 @@
             <th>Price</th>
 
         </tr>
-        {% for item in reserved %}
+        {% for item in whisky %}
         <tr>
             <th> {{item['WhiskyID']}}</th>
             <th> {{item['WhiskyName']}} </th>
