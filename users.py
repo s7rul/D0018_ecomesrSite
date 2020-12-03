@@ -297,7 +297,6 @@ def addComment(whiskyID, comment):
 @app.route('/oders')
 def oders():
 
-    print("Im in")
 
     userID = request.cookies.get('userID')
 
@@ -309,17 +308,14 @@ def oders():
     # Try to connect to the server and find all values for
     # whisky tabel.
 
-    print("Here")
 
     try:
 
         with con.cursor() as cur:
 
-            print("Before SQL")
 
             cur.execute("SELECT * from reserved WHERE CustomerID = %s;", (userID,))
 
-            print("SQL")
 
             oders = cur.fetchall()
 
