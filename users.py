@@ -312,19 +312,21 @@ def oders():
     try:
 
         with con.cursor() as cur:
-
-
             cur.execute("SELECT * from reserved WHERE CustomerID = %s;", (userID,))
-
-
             oders = cur.fetchall()
-
 
 
     finally:
 
         con.close()
 
-
     return render_template("oders.html",
                            oders = oders)
+
+
+@app.route('/oders/<ReservedID>')
+def oder(whiskyID):
+
+
+
+    return render_template("oder.html")

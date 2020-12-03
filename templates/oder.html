@@ -1,0 +1,40 @@
+﻿{% extends 'layOut.html' %}
+
+	{% block body %}
+
+
+
+<div>
+
+    <h2>Whisky Master</h2>
+
+    {%if basket|count != 0%}
+    <table class="center">
+
+        <tr>
+
+            <th>ID</th>
+            <th>NAME</th>
+            <th>Quantity</th>
+            <th>Price</th>
+
+        </tr>
+        {% for item in reserved %}
+        <tr>
+            <th> {{item['WhiskyID']}}</th>
+            <th> {{item['WhiskyName']}} </th>
+            <th>{{item['Quantity']}}</th>
+            <th> {{item['Price']}} kr/st </th>
+        </tr>
+        {% endfor %}
+
+        <th colspan="2"> Total Price </th>
+        <th colspan="2"> {{price}} kr </th>
+    </table>
+
+</div>
+
+
+
+
+{% endblock %}
