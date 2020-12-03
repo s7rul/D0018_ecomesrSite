@@ -63,37 +63,43 @@ def whisky():
 
 @app.route('/whisky/<whiskyID>', methods=['GET', 'POST'])
 def whiskypage(whiskyID):
-    form = AddForm(request.form)
+    #form = AddForm(request.form)
     if (request.method == 'POST'):
 
-        print(print(request.form))
+        print(request.form)
 
         comments = request.form
 
+        field = (next(iter(request.form)))
+        print(field)
 
-        try:
-            #End up here if comments.
-            if form.addNumber.data == "" and comments['Comments'] != "":
 
-                if len(comments['Comments']) > 511:
-                    return "comment To long"
+        #End up here if comments.
+        if field == 'Comments':
 
-                if addComment(whiskyID, comments['Comments']):
-                    return redirect('/whisky/' + whiskyID)
-                else:
-                    return redirect('/login')
+            if len(comments['Comments']) > 511:
+                return "comment To long"
 
-            #End up here if Buy
+            if addComment(whiskyID, comments['Comments']):
+                return redirect('/whisky/' + whiskyID)
             else:
-                count = int(form.addNumber.data)
+                return redirect('/login')
 
-                if addToBasket(whiskyID, count):
-                    return redirect('/whisky/' + whiskyID)
-                else:
-                    return redirect('/login')
+        #End up here if Buy
+        elif field == 'addToCart':
+            count = int(request.form['addToCart'])
+            print(count)
 
-        except:
-            return "Wrong input"
+            if addToBasket(whiskyID, count):
+                print("here")
+                return redirect('/whisky/' + whiskyID)
+            else:
+                return redirect('/login')
+        elif field == 'rate':
+            return 'rate'
+        else:
+            return 'wrong!!!!!'
+
 
 
     else:
@@ -121,6 +127,5 @@ def whiskypage(whiskyID):
         "whiskypage.html",
         title = "Whisky Master",
         message = row,
-        form=form,
         comments = comments)
 

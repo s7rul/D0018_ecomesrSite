@@ -67,6 +67,7 @@ def purchaseBasket(userID, basketID):
 def addToBasket(whiskyID, count):
 
     userID = request.cookies.get('userID')
+    print("add to basket")
 
     if userID == None:
         return False
