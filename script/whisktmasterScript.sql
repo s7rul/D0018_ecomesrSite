@@ -99,10 +99,10 @@ CREATE TABLE whiskymaster.reserved
     
 CREATE TABLE whiskymaster.grading
 (
-	GradingID		VARCHAR(15)		NOT Null,
+	GradingID		int				NOT Null,
     Grade			int				NOT Null,
     ProductNumber	int				NOT NUll,
-    UserID			int		NOT NUll,
+    UserID			int				NOT NUll,
     
     PRIMARY KEY(GradingID),
     FOREIGN KEY (ProductNumber) REFERENCES whiskymaster.whisky(WhiskyID),
