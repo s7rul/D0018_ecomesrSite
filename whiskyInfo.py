@@ -75,6 +75,8 @@ def whiskypage(whiskyID):
             #End up here if comments.
             if form.addNumber.data == "" and comments['Comments'] != "":
 
+                if len(comments['Comments']) > 511:
+                    return "comment To long"
 
                 if addComment(whiskyID, comments['Comments']):
                     return redirect('/whisky/' + whiskyID)
