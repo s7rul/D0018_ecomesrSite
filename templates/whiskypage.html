@@ -49,20 +49,40 @@
 
 </div>
 <p>
+	<div>
+
+		Would you like to rate it 1-100
+
+		<form action="" method="post">
+			<div>
+				<label for="rate">Rate</label>
+				<input type="number" max="100" min="1" name="rate" />
+			</div>
+
+			<div>
+				<input type="submit" value="submit">
+			</div>
+		</form>
+	</div>
+</p>
+
+
+<p>
 	{% if message['StorageLeft'] > 0 %}
 	<div>
 		How many would you like to buy?
 	</div>
-	<form action="" method="POST">
-		<div class="container">
-			<div>
-				{{ form.addNumber}}
-			</div>
-			{{ form.submit }}
-			<label>
-			</label>
+	<form action="" method="post">
+		<div>
+			<label for="addToCart">Add to Cart</label>
+			<input type="number"  min="1" name="addToCart" />
+		</div>
+
+		<div>
+			<input type="submit" value="submit">
 		</div>
 	</form>
+
 	{% else %}
 	<div>
 		Sorry We are out of stock right now.
