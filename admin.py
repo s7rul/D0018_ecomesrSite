@@ -161,20 +161,59 @@ def admin():
     if request.method == 'POST':
         modID = (next(iter(request.form)))
         qvant = request.form[modID]
-        if qvant == '' or int(qvant) < 0:
+
+
+        #Filter Whisky
+        if modID == "filter":
+
+            con = getConnection()
+
+            try:
+
+                if qvant == "active":
+                
+                    with con.cursor() as cur:
+                        cur.execute('SELECT * FROM whisky WHERE Active = True')
+                        rows = cur.fetchall()
+
+                elif qvant == "deactive":
+
+                    con = getConnection()
+                
+                    with con.cursor() as cur:
+                        cur.execute('SELECT * FROM whisky WHERE Active = False')
+                        rows = cur.fetchall()
+
+                else:
+                    with con.cursor() as cur:
+                        cur.execute('SELECT * FROM whisky')
+                        rows = cur.fetchall()
+
+            finally:
+                    con.close()
+
+            return render_template(
+                        "adminPage.html",
+                        title = "Whisky Master",
+                        inventory = rows)
+
+
+        #Try to change value of Whisky
+        elif qvant == '' or int(qvant) < 0:
             return redirect('/admin')
 
-        con = getConnection()
+        else:
+            con = getConnection()
 
-        try:
-            with con.cursor() as cur:
-                cur.execute("UPDATE whisky SET StorageLeft=%s WHERE WhiskyID = %s;", (qvant, modID))
-                con.commit()
+            try:
+                with con.cursor() as cur:
+                    cur.execute("UPDATE whisky SET StorageLeft=%s WHERE WhiskyID = %s;", (qvant, modID))
+                    con.commit()
 
-        finally:
-            con.close()
+            finally:
+                con.close()
 
-        return redirect('/admin')
+            return redirect('/admin')
 
 
 
@@ -213,6 +252,18 @@ def editWhiskuPage(wid):
         if value == "":
             return redirect('/admin/editwhisky/' + str(wid))
 
+        #Removes comments
+        if field =="removeComment":
+            con = getConnection()
+            try:
+                with con.cursor() as cur:
+                    cur.execute("DELETE FROM comments WHERE ID = %s;", (value, ))
+                con.commit()
+            finally:
+                con.close()
+            return redirect('/admin/editwhisky/' + str(wid))
+
+
         if field == "dont":
             con = getConnection()
             try:
@@ -236,6 +287,8 @@ def editWhiskuPage(wid):
 
 
         con = getConnection()
+
+
         try:
             with con.cursor() as cur:
                 cur.execute(("UPDATE whisky SET " + field + "=%s WHERE WhiskyID = %s;"),(value, wid))
