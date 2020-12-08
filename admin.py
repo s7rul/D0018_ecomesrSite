@@ -88,8 +88,10 @@ def admin():
 
     if request.method == 'POST':
         modID = (next(iter(request.form)))
-
         qvant = request.form[modID]
+
+
+        #Filter Whisky
         if modID == "filter":
 
             con = getConnection()
@@ -124,7 +126,7 @@ def admin():
                         inventory = rows)
 
 
-
+        #Try to change value of Whisky
         elif qvant == '' or int(qvant) < 0:
             return redirect('/admin')
 
