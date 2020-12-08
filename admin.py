@@ -141,6 +141,18 @@ def editWhiskuPage(wid):
         if value == "":
             return redirect('/admin/editwhisky/' + str(wid))
 
+        #Removes comments
+        if field =="removeComment":
+            con = getConnection()
+            try:
+                with con.cursor() as cur:
+                    cur.execute("DELETE FROM comments WHERE ID = %s;", (value, ))
+                con.commit()
+            finally:
+                con.close()
+            return redirect('/admin/editwhisky/' + str(wid))
+
+
         if field == "dont":
             con = getConnection()
             try:
@@ -164,6 +176,8 @@ def editWhiskuPage(wid):
 
 
         con = getConnection()
+
+
         try:
             with con.cursor() as cur:
                 cur.execute(("UPDATE whisky SET " + field + "=%s WHERE WhiskyID = %s;"),(value, wid))
