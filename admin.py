@@ -12,7 +12,79 @@ app.config["IMAGE_UPLOADS"] = "HelloFlask/static"
 
 
 
+@app.route('/admin/orders', methods=['GET', 'POST'])
+def adminOrders():
+    #The connection the the server.
+    con = getConnection()
+    # Try to connect to the server and find all values for
+    # whisky tabel.
 
+    try:
+        with con.cursor() as cur:
+            cur.execute("SELECT * from reserved;")
+            oders = cur.fetchall()
+
+
+    finally:
+
+        con.close()
+
+    return render_template("adminOrders.html",
+                           oders = oders)
+
+@app.route('/admin/order/<ID>', methods=['GET', 'POST'])
+def adminOrder(ID):
+
+
+
+
+    #The connection the the server.
+    con = getConnection()
+    # Try to connect to the server and find all values for
+    # whisky tabel.
+
+    try:
+        with con.cursor() as cur:
+            cur.execute("SELECT whisky.WhiskyID, whisky.WhiskyName, reservedProduct.Price, reservedProduct.Quantity FROM (whisky INNER JOIN reservedProduct on whisky.WhiskyID=reservedProduct.ProductNumber) WHERE ReservedID = %s;", (ID,))
+            rows = cur.fetchall()
+
+            cur.execute("SELECT SUM(Price * Quantity) FROM reservedProduct WHERE ReservedID = %s;", (ID,))
+
+            price = cur.fetchone()
+            price = price['SUM(Price * Quantity)']
+
+            cur.execute("""SELECT
+                customers.CustomerID,
+                customers.CorpName,
+                customers.UserName,
+                customers.Mail,
+                customers.PNumber,
+                reserved.ReservedID,
+                reserved.City,
+                reserved.Adress,
+                reserved.ZipCode,
+                reserved.ReservedStatus
+                FROM
+                (reserved INNER JOIN customers ON
+                reserved.CustomerID = customers.CustomerID)
+                WHERE
+                reserved.ReservedID = %s""",
+                (ID,))
+            info = cur.fetchone()
+
+
+    finally:
+
+        con.close()
+
+    print(rows)
+
+
+
+    return render_template("adminOrder.html",
+                           whisky = rows,
+                           price = price,
+                           info = info)
 
 @app.route('/admin/login', methods=['GET', 'POST'])
 def loginAdmin():

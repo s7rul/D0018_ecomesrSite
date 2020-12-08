@@ -1,0 +1,92 @@
+﻿{% extends 'layOut.html' %}
+
+	{% block body %}
+
+
+
+<div>
+
+    <h2>Whisky Master</h2>
+    <table class="center">
+
+        <tr>
+
+            <th>ID</th>
+            <th>NAME</th>
+            <th>Quantity</th>
+            <th>Price</th>
+
+        </tr>
+        {% for item in whisky %}
+        <tr>
+            <th> {{item['WhiskyID']}}</th>
+            <th> {{item['WhiskyName']}} </th>
+            <th>{{item['Quantity']}}</th>
+            <th> {{item['Price']}} kr/st </th>
+        </tr>
+        {% endfor %}
+
+        <th colspan="2"> Total Price </th>
+        <th colspan="2"> {{price}} kr </th>
+    </table>
+
+    <table class="center">
+		<tr>
+			<th colspan="2"> Customer info </th>
+		</tr>
+		<tr>
+			<th> CustomerID </th>
+			<th> {{info['CustomerID']}} </th>
+		</tr>
+		<tr>
+			<th> Corporation </th>
+			<th> {{info['CorpName']}} </th>
+		</tr>
+		<tr>
+			<th> Mail </th>
+			<th> {{info['Mail']}} </th>
+		</tr>
+		<tr>
+			<th> Phone number </th>
+			<th> {{info['PNumber']}} </th>
+		</tr>
+		<tr>
+			<th colspan="2"> Status </th>
+		</tr>
+		<tr>
+			<th> City </th>
+			<th> {{info['City']}} </th>
+		</tr>
+		<tr>
+			<th> Adress </th>
+			<th> {{info['Adress']}} </th>
+		</tr>
+		<tr>
+			<th> ZipCode </th>
+			<th> {{info['ZipCode']}} </th>
+		</tr>
+		<tr>
+			<th> Status </th>
+			<th> {{ info['ReservedStatus'] }} </th>
+		</tr>
+	</table>
+
+	<form action="" method="post">
+		<div>
+			<label for="status">status:</label>
+			<select id="status" name="status">
+				<option value="ordered">ordered</option>
+				<option value="packing">packing</option>
+				<option value="sent">sent</option>
+				<option value="payed">payed</option>
+				<option value="aborted">aborted</option>
+				<input type="submit" value="Change">
+		</div>
+	</form>
+
+</div>
+
+
+
+
+{% endblock %}

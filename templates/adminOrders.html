@@ -1,0 +1,21 @@
+﻿{% extends 'layOut.html' %}
+
+	{% block body %}
+
+
+<div>
+
+    <h2>Whisky Master</h2>
+    <p>Here are all oders</p>
+
+
+    {% for items in oders %}
+    <!--Jinja Loop starts at 1 and not zero-->
+    <p>
+        <a href="../admin/order/{{items['ReservedID']}}">{{loop.index}} Order</a>
+    </p>
+    {% endfor %}
+
+</div>
+
+{% endblock %}
