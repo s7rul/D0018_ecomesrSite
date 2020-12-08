@@ -36,6 +36,20 @@ def adminOrders():
 def adminOrder(ID):
 
 
+    if request.method == 'POST':
+        print(request.form)
+        value = request.form['status']
+        con = getConnection()
+        # Try to connect to the server and find all values for
+        # whisky tabel.
+
+        try:
+            with con.cursor() as cur:
+                cur.execute("UPDATE reserved SET ReservedStatus=%s WHERE ReservedID = %s;", (value, ID))
+            con.commit()
+        finally:
+
+            con.close()
 
 
     #The connection the the server.
@@ -76,9 +90,6 @@ def adminOrder(ID):
     finally:
 
         con.close()
-
-    print(rows)
-
 
 
     return render_template("adminOrder.html",
