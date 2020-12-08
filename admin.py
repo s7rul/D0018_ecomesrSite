@@ -180,10 +180,20 @@ def editWhiskuPage(wid):
         with con.cursor() as cur:
             cur.execute("SELECT * FROM whisky WHERE WhiskyID=%s;", (str(wid),))
             whisky = cur.fetchone()
+
+            cur.execute("SELECT * FROM comments WHERE ProductNumber=%s;", (str(wid),))
+            comments = cur.fetchall()
+
+            cur.execute("SELECT AVG(Grade) FROM grading WHERE ProductNumber = %s;", (wid,))
+            grade = cur.fetchone()
+
     finally:
         con.close()
 
-    return render_template("editwhisky.html", whisky=whisky)
+    return render_template("editwhisky.html", 
+                           whisky=whisky,
+                           comments = comments,
+                           grade = grade)
 
 
 

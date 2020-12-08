@@ -64,6 +64,13 @@
 				</form>
 			</th>
 		</tr>
+		<tr>
+			<th> Grade </th>
+			<th>
+				{{grade['AVG(Grade)']}}
+			</th>
+		</tr>
+
 	</table>
 	{%if whisky['Active'] == True%}
 		<div>
@@ -80,4 +87,32 @@
 	{%endif%}
 
 </div>
+
+<p>
+
+	<div>
+		<table class="center">
+			<tr>
+				<th>Comment ID</th>
+				<th>Username</th>
+				<th>Comment </th>
+
+			</tr>
+			{% for item in comments %}
+			<!--Jinja Loop starts at 1 and not zero-->
+
+			<tr>
+				<th>{{item['ID']}}</th>
+				<th> {{item['UserName']}}</th>
+				<th> {{item['Comments']}} </th>
+
+			</tr>
+
+
+			{% endfor %}
+		</table>
+	</div>
+
+</p>
+
 {% endblock %}
