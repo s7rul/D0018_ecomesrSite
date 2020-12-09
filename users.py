@@ -355,8 +355,8 @@ def oders():
                            oders = oders)
 
 
-@app.route('/oders/<ReservedID>')
-def oder(ReservedID):
+@app.route('/oders/<ID>')
+def oder(ID):
 
 
     userID = request.cookies.get('userID')
@@ -373,15 +373,32 @@ def oder(ReservedID):
 
 
         with con.cursor() as cur:
-            cur.execute("SELECT whisky.WhiskyID, whisky.WhiskyName, reservedProduct.Price, reservedProduct.Quantity FROM (whisky INNER JOIN reservedProduct on whisky.WhiskyID=reservedProduct.ProductNumber) WHERE ReservedID = %s;", (ReservedID,))
+            cur.execute("SELECT whisky.WhiskyID, whisky.WhiskyName, reservedProduct.Price, reservedProduct.Quantity FROM (whisky INNER JOIN reservedProduct on whisky.WhiskyID=reservedProduct.ProductNumber) WHERE ReservedID = %s;", (ID,))
             rows = cur.fetchall()
 
-            cur.execute("SELECT SUM(Price * Quantity) FROM reservedProduct WHERE ReservedID = %s;", (ReservedID,))
+            cur.execute("SELECT SUM(Price * Quantity) FROM reservedProduct WHERE ReservedID = %s;", (ID,))
 
             price = cur.fetchone()
             price = price['SUM(Price * Quantity)']
 
-
+            cur.execute("""SELECT
+                customers.CustomerID,
+                customers.CorpName,
+                customers.UserName,
+                customers.Mail,
+                customers.PNumber,
+                reserved.ReservedID,
+                reserved.City,
+                reserved.Adress,
+                reserved.ZipCode,
+                reserved.ReservedStatus
+                FROM
+                (reserved INNER JOIN customers ON
+                reserved.CustomerID = customers.CustomerID)
+                WHERE
+                reserved.ReservedID = %s""",
+                (ID,))
+            info = cur.fetchone()
 
     finally:
 
@@ -393,4 +410,5 @@ def oder(ReservedID):
 
     return render_template("oder.html",
                            whisky = rows,
-                           price = price)
+                           price = price,
+                           info=info)
