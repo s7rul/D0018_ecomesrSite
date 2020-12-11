@@ -6,7 +6,23 @@
 <div>
 
     <h2>Whisky Master</h2>
-    <p>Here are all oders</p>
+    <p>Here are all the Orders</p>
+
+    <form action="" method="post">
+        <div>
+            <label for="status">status:</label>
+            <select id="status" name="status">
+                <option value="all">all</option>
+                <option value="ordered">ordered</option>
+                <option value="packing">packing</option>
+                <option value="sent">sent</option>
+                <option value="payed">payed</option>
+                <option value="aborted">aborted</option>
+            </select>
+                <input type="submit" value="Change">
+        </div>
+    </form>
+
 
 
     {% for items in oders %}

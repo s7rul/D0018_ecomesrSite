@@ -14,20 +14,37 @@ app.config["IMAGE_UPLOADS"] = "HelloFlask/static"
 
 @app.route('/admin/orders', methods=['GET', 'POST'])
 def adminOrders():
-    #The connection the the server.
-    con = getConnection()
-    # Try to connect to the server and find all values for
-    # whisky tabel.
 
-    try:
-        with con.cursor() as cur:
-            cur.execute("SELECT * from reserved;")
-            oders = cur.fetchall()
+    if request.method == 'GET':
+         value ='all'
+
+    else:
+        value = request.form['status']
 
 
-    finally:
+    if value == "all":
+        con = getConnection()
 
-        con.close()
+        try:
+            with con.cursor() as cur:
+                cur.execute("SELECT * from reserved;")
+                oders = cur.fetchall()
+
+        finally:
+            con.close()
+    else:
+        con = getConnection()
+
+        try:
+            with con.cursor() as cur:
+                cur.execute("SELECT * from reserved WHERE ReservedStatus=%s;",(value,))
+                oders = cur.fetchall()
+        finally:
+            con.close()
+
+ 
+    
+
 
     return render_template("adminOrders.html",
                            oders = oders)
