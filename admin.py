@@ -10,10 +10,33 @@ from HelloFlask.sqlConnection import getConnection
 
 app.config["IMAGE_UPLOADS"] = "HelloFlask/static"
 
+def adminValidLogin():
+    adminID = request.cookies.get('adminID')
+
+    if adminID == None:
+        return False
+
+    con = getConnection()
+
+    try:
+        with con.cursor() as cur:
+            cur.execute("SELECT * FROM admins WHERE ID = %s;", adminID)
+            admins = cur.fetchall()
+    finally:
+        con.close()
+
+    if len(admins) == 0:
+        return False
+    else:
+        return True
+
 
 
 @app.route('/admin/orders', methods=['GET', 'POST'])
 def adminOrders():
+
+    if not adminValidLogin():
+        return redirect('/admin/login', 303)
 
     if request.method == 'GET':
          value ='all'
@@ -51,6 +74,8 @@ def adminOrders():
 
 @app.route('/admin/order/<ID>', methods=['GET', 'POST'])
 def adminOrder(ID):
+    if not adminValidLogin():
+        return redirect('/admin/login', 303)
 
 
     if request.method == 'POST':
@@ -117,6 +142,7 @@ def adminOrder(ID):
 @app.route('/admin/login', methods=['GET', 'POST'])
 def loginAdmin():
     
+
     form = LoginForm(request.form)
 
 
@@ -181,9 +207,7 @@ def userPageLoginAdmin(ID):
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
 
-    adminID = request.cookies.get('adminID')
-
-    if adminID == None:
+    if not adminValidLogin():
         return redirect('/admin/login', 303)
 
     if request.method == 'POST':
@@ -273,6 +297,9 @@ def admin():
 
 @app.route('/admin/editwhisky/<wid>', methods=['GET', 'POST'])
 def editWhiskuPage(wid):
+    if not adminValidLogin():
+        return redirect('/admin/login', 303)
+
     if request.method == 'POST':
         field = next(iter(request.form))
         value = request.form[field]
@@ -353,6 +380,8 @@ def editWhiskuPage(wid):
 
 @app.route("/admin/uploadImage", methods=["GET", "POST"])
 def upload_image():
+    if not adminValidLogin():
+        return redirect('/admin/login', 303)
 
     print(os.getcwd())
 
@@ -392,6 +421,9 @@ def upload_image():
 
 @app.route('/admin/addwhisky', methods=['GET', 'POST'])
 def addWhiskyPage():
+    if not adminValidLogin():
+        return redirect('/admin/login', 303)
+
     if request.method == 'POST':
         print(request.form)
         form = request.form
