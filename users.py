@@ -44,10 +44,6 @@ def login():
 
                 row = cur.fetchone()
 
-                
-
-
-
         finally:
             con.close()
 
@@ -55,7 +51,9 @@ def login():
             return "You done Goffed"
               
         else:
-            return userPageLogin(row['CustomerID'])
+            ret = make_response(redirect('/user/', 303))
+            ret.set_cookie('userID', str(row['CustomerID']))
+            return ret
         
     return render_template(
     "login.html",
@@ -63,74 +61,25 @@ def login():
 
 
 
-
-def userPageLogin(ID):
-    #The connection the the server.
-    con = getConnection()
-
-    print(ID)
-
-    # Try to connect to the server and find all values for
-    # whisky tabel.
-    try:
-
-        with con.cursor() as cur:
-
-            cur.execute("SELECT * FROM customers WHERE CustomerID=%s;", (ID,))
-
-            row = cur.fetchone()
-
-    finally:
-
-        con.close()
-
-    
-
-    ret = make_response(render_template(
-    "userPage.html",
-    title = "Whisky Master",
-    customer = row))
-    #set the cookie Can only handel Strings.
-    ID = str(ID)
-    ret.set_cookie('userID', ID)
-    return ret
-
 @app.route('/user/')
 def userPageCookie():
     ID = request.cookies.get('userID')
 
     if ID == None:
         return redirect('/login')
-    else:
-        return userPageLogin(ID)
 
-@app.route('/user/<userID>')
-def userPageURL(userID):
-
-
-    #The connection the the server.
     con = getConnection()
 
-    # Try to connect to the server and find all values for
-    # whisky tabel.
     try:
-
         with con.cursor() as cur:
-
-            cur.execute("SELECT * FROM customers WHERE CustomerID=%s;", (userID,))
-
-
+            cur.execute("SELECT * FROM customers WHERE CustomerID=%s;", (ID,))
             row = cur.fetchone()
 
-
     finally:
-
         con.close()
 
-    return render_template(
-    "userPage.html",
-    title = "Whisky Master",
-    customer = row)
+    return render_template('userPage.html', customer = row)
+
 
 
 @app.route('/basket', methods=['GET', 'POST'])
