@@ -7,7 +7,7 @@ from HelloFlask.forms.LoginForm import LoginForm
 from HelloFlask.forms.AddForm import AddForm
 from HelloFlask.sqlConnection import getConnection
 from HelloFlask.purshese import addToBasket
-from HelloFlask.users import addComment, rateWhisky
+from HelloFlask.users import addComment, rateWhisky, userValidLogin
 
 @app.route('/')
 @app.route('/home')
@@ -66,6 +66,9 @@ def whisky():
 def whiskypage(whiskyID):
     #form = AddForm(request.form)
     if (request.method == 'POST'):
+
+        if not userValidLogin():
+            return redirect('/login', 303)
 
         print(request.form)
 

@@ -7,6 +7,26 @@ from HelloFlask.forms.LoginForm import LoginForm
 from HelloFlask.sqlConnection import getConnection
 from HelloFlask.purshese import purchaseBasket
 
+def userValidLogin():
+    userID = request.cookies.get('userID')
+
+    if userID == None:
+        return False
+
+    con = getConnection()
+
+    try:
+        with con.cursor() as cur:
+            cur.execute("SELECT * FROM customers WHERE CustomerID = %s;", userID)
+            users = cur.fetchall()
+    finally:
+        con.close()
+
+    if len(users) == 0:
+        return False
+    else:
+        return True
+
 def getUsername():
     userID = request.cookies.get('userID')
 
@@ -78,6 +98,9 @@ def userPageCookie():
     finally:
         con.close()
 
+    if row == None:
+        return redirect('/login', 303)
+
     return render_template('userPage.html', customer = row)
 
 
@@ -86,10 +109,10 @@ def userPageCookie():
 def basketPage():
     error = 'no'
 
-    userID = request.cookies.get('userID')
+    if not userValidLogin():
+        return redirect('/login', 303)
 
-    if userID==None:
-        return redirect("/login")
+    userID = request.cookies.get('userID')
 
     if request.method == 'POST':
         print("form: "+ str(request.form))
@@ -224,8 +247,6 @@ def addComment(whiskyID, comment):
 
     userID = request.cookies.get('userID')
 
-    if userID == None:
-        return False
 
     con = getConnection()
 
@@ -244,10 +265,8 @@ def addComment(whiskyID, comment):
     return True
 
 def rateWhisky(whiskyID, grade):
-    userID = request.cookies.get('userID')
 
-    if userID == None:
-        return False
+    userID = request.cookies.get('userID')
 
     con = getConnection()
 
@@ -277,11 +296,10 @@ def rateWhisky(whiskyID, grade):
 @app.route('/oders')
 def oders():
 
+    if not userValidLogin():
+        return redirect('/login')
 
     userID = request.cookies.get('userID')
-
-    if userID == None:
-        return redirect('/login')
 
     #The connection the the server.
     con = getConnection()
@@ -307,6 +325,8 @@ def oders():
 @app.route('/oders/<ID>')
 def oder(ID):
 
+    if not userValidLogin():
+        return redirect('/login')
 
     userID = request.cookies.get('userID')
 
@@ -353,7 +373,7 @@ def oder(ID):
 
         con.close()
 
-    print(rows)
+    #print(rows)
 
 
 
