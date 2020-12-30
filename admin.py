@@ -168,40 +168,16 @@ def loginAdmin():
             return "You done Goffed"
                     
         else:
-            return userPageLoginAdmin(row['ID'])
+            #return userPageLoginAdmin(row['ID'])
+            ret = make_response(redirect('/admin', 303))
+            ret.set_cookie('adminID', row['ID']) 
+            return ret
         
 
     return render_template(
     "adminLogin.html",
     form=form)
 
-
-def userPageLoginAdmin(ID):
-
-    #The connection the the server.
-    con = getConnection()
-
-    # Try to connect to the server and find all values for
-    # whisky tabel.
-    try:
-
-        with con.cursor() as cur:
-
-            cur.execute('SELECT * FROM whisky')
-
-            rows = cur.fetchall()
-
-    finally:
-
-        con.close()
-
-    ret = make_response(render_template(
-    "adminPage.html",
-    title = "Whisky Master",
-    inventory = rows))
-    #set the cookie
-    ret.set_cookie('adminID', ID)
-    return ret
 
 
 @app.route('/admin', methods=['GET', 'POST'])
