@@ -156,7 +156,7 @@ def loginAdmin():
         try:
             with con.cursor() as cur:
 
-                cur.execute("SELECT * FROM admins WHERE UserName=%s AND PassW=%s;", (str(form.userName.data), str(form.passW.data)))
+                cur.execute("SELECT * FROM admins WHERE UserName=%s AND PassW=%s;", (request.form['username'], request.form['password']))
 
                 row = cur.fetchone()
 
