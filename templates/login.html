@@ -4,21 +4,25 @@
 
 	<div>
 
-		<form action="" method="POST">
+    <form action="" method="POST">
 
-			<div class="container">
-				<div>
-					{{ form.userName.label }} {{ form.userName}}
-				</div>
-				<div>
-					{{ form.passW.label }} {{ form.passW}}
-				</div>
-				{{ form.submit }}
-				<label>
-				</label>
+        <div class="container">
+
+			<div>
+				<label for="username">Username</label>
+				<input type="text" name="username" />
+			</div>
+			<div>
+				<label for="password">Password</label>
+				<input type="password" name="password">
+			</div>
+			<div>
+				<input type="submit" name="login" value="Login">
 			</div>
 
-		</form>
+        </div>
+
+    </form>
 
 	</div>
 

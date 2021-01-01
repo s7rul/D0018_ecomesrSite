@@ -49,8 +49,6 @@ def getUsername():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     
-    form = LoginForm(request.form)
-
 
     if (request.method == 'POST'):
 
@@ -60,7 +58,7 @@ def login():
         try:
             with con.cursor() as cur:
 
-                cur.execute("SELECT * FROM customers WHERE UserName=%s AND PassW=%s;", (str(form.userName.data), str(form.passW.data)))
+                cur.execute("SELECT * FROM customers WHERE UserName=%s AND PassW=%s;", (request.form['username'], request.form['password']))
 
                 row = cur.fetchone()
 
@@ -76,8 +74,7 @@ def login():
             return ret
         
     return render_template(
-    "login.html",
-    form=form)
+    "login.html")
 
 
 
